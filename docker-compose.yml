@@ -1,6 +1,6 @@
 services:
   novel:
-    image: novel
+    image: son29032001/novel-fe:latest
     container_name: novel
     build:
       context: .
@@ -9,4 +9,4 @@ services:
     volumes:
       - .:/app
     ports:
-      - '3000:3000'
+      - '3333:3333'

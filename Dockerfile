@@ -21,6 +21,6 @@ COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/next.config.mjs ./
 
-EXPOSE 3000
+EXPOSE 3333
 
 CMD ["yarn", "start"]
