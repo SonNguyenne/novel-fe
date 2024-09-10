@@ -1,0 +1,12 @@
+services:
+  novel:
+    image: novel
+    container_name: novel
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    volumes:
+      - .:/app
+    ports:
+      - '3000:3000'
