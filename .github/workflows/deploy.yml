@@ -45,6 +45,6 @@ jobs:
           password: ${{ secrets.SERVER_PASSWORD }}
           script: |
             cd /root/novel 
-            docker-compose down web
-            docker-compose pull web
-            docker-compose up -d web
+            docker compose down web
+            docker compose pull web
+            docker compose up -d web
