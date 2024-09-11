@@ -1,12 +1,8 @@
 services:
-  novel:
+  web:
     image: son29032001/novel-fe:latest
-    container_name: novel
-    build:
-      context: .
-      dockerfile: Dockerfile
+    container_name: web
+    build: .
     restart: unless-stopped
-    volumes:
-      - .:/app
     ports:
       - '3333:3333'
