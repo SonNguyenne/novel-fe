@@ -85,16 +85,18 @@ export default function Home() {
             })}
       </Box>
 
-      <Divider className="mt-10 mb-16 md:my-20" />
+      <Divider className="pt-10 md:pt-20" />
 
-      <Box className="grid lg:grid-cols-4 gap-10">
+      <Box className="pt-16 md:pt-20 grid lg:grid-cols-4 gap-10">
         <Box className="lg:col-span-1 lg:order-2">
           <Typography variant="h4">Truyện yêu thích</Typography>
           <Box className="mt-4 overflow-y-scroll max-h-[620px]">
             <Box className="w-full rounded border border-transparent bg-gray-200">
               <List>
                 {!products || loading
-                  ? Array.from({ length: 10 }).map((_, i) => <Skeleton key={i} variant="text" sx={{ fontSize: 12 }} />)
+                  ? Array.from({ length: 10 }).map((_, i) => (
+                      <Skeleton key={i} variant="text" sx={{ fontSize: 18, marginBottom: '12px' }} />
+                    ))
                   : products.map(prod => {
                       return (
                         <ListItem key={prod.id}>

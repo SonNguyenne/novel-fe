@@ -20,9 +20,11 @@ export default function RootLayout({
           <ThemeClientProvider>
             <Header />
 
-            <main className="relative mt-28 min-h-[calc(100dvh-112px-90px)] flex flex-col">{children}</main>
+            <main className="relative mt-28 min-h-[calc(100dvh-112px-90px)] flex flex-col">
+              {children}
 
-            <ScrollToTopButton />
+              <ScrollToTopButton />
+            </main>
 
             <Footer />
           </ThemeClientProvider>
