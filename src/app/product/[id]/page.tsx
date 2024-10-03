@@ -57,14 +57,16 @@ export default function Page({ params }: { params: { id: number } }) {
   }, [flag])
 
   const handleChapterClick = (chap: IChapter) => {
-    if (!user) return router.push('/login')
+    return router.push(`/product/${chap.productId}/chapter/${chap.chapterNumber}`)
+    // TODO: UnComment
+    // if (!user) return router.push('/login')
 
-    if (chap.price > 0 && user && !chap.users.includes(+user.id)) {
-      // setChapter({ ...chap, productId: params?.id })
-      // setOpenPopup(true)}
-    } else {
-      router.push(`/products/${params?.id}/chapters/${chap.chapterNumber}`)
-    }
+    // if (chap.price > 0 && user && !chap.users.includes(+user.id)) {
+    //   // setChapter({ ...chap, productId: params?.id })
+    //   // setOpenPopup(true)}
+    // } else {
+    //   router.push(`/products/${params?.id}/chapters/${chap.chapterNumber}`)
+    // }
   }
 
   // const handleClosePopup = () => {
