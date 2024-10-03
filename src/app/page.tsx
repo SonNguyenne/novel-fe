@@ -53,7 +53,7 @@ export default function Home() {
         <Box className="lg:col-span-1 lg:order-2">
           <Typography variant="h4">Truyện yêu thích</Typography>
           <Box className="mt-4 overflow-y-auto max-h-[620px]">
-            <Box className="w-full rounded border border-transparent bg-gray-200">
+            <Box className="w-full rounded border border-transparent">
               <List>
                 {!products || loading
                   ? Array.from({ length: 10 }).map((_, i) => (
@@ -62,7 +62,7 @@ export default function Home() {
                   : products.map(prod => {
                       return (
                         <ListItem key={prod.id}>
-                          <ListItemButton href={`/products/${prod.id}`} className="text-gray-500 hover:text-black">
+                          <ListItemButton href={`/products/${prod.id}`}>
                             <ListItemText>{prod.name}</ListItemText>
                           </ListItemButton>
                         </ListItem>

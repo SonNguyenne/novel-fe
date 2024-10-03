@@ -152,7 +152,7 @@ export const Header = () => {
             ) : (
               <>
                 <Tooltip title="Favorite list" onClick={() => router.push('/list')}>
-                  <IconButton aria-label="delete" className="text-red-600 hover:bg-red-50" size="small">
+                  <IconButton aria-label="delete" color="error" size="small">
                     <FavoriteIcon fontSize="small" />
                   </IconButton>
                 </Tooltip>

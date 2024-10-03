@@ -1,6 +1,8 @@
-export function _handleParams(url: URL, params: Record<string, string> = {}) {
-  Object.entries(params).forEach(([key, value]) => url.searchParams.append(key, value))
-  return url
+export function _handleParams(url: string, params: Record<string, string> = {}) {
+  const queryParams: Record<string, string> = { ...params }
+  const queryString = new URLSearchParams(queryParams).toString()
+
+  return queryString ? `${url}?${queryString}` : url
 }
 
 export async function _handleReponse<T>(res: Response) {

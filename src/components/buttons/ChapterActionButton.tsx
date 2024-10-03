@@ -5,8 +5,8 @@ import { IChapter } from '@/types'
 import { ArrowBack, ArrowForward } from '@mui/icons-material'
 import { Box, Button } from '@mui/material'
 import SettingsIcon from '@mui/icons-material/Settings'
-import { cn } from '@/utils/helpers'
 import { useRouter } from 'next/navigation'
+import { cn } from '@/utils'
 
 export interface IChapterActionButton {
   chapter: IChapter
@@ -34,7 +34,7 @@ export const ChapterActionButton: FC<IChapterActionButton> = ({ chapter, count, 
         className={isFirst ? 'invisible' : ''}
         onClick={() => handleClick(chapter.chapterNumber - 1)}
       >
-        {isFirst ? 'Hết' : `Tập ${chapter.chapterNumber - 1}`}
+        Tập {chapter.chapterNumber - 1}
       </Button>
 
       <Button variant="outlined" startIcon={<SettingsIcon />} className="backdrop-blur-sm">
@@ -48,7 +48,7 @@ export const ChapterActionButton: FC<IChapterActionButton> = ({ chapter, count, 
         className={isLast ? 'invisible' : ''}
         onClick={() => handleClick(chapter.chapterNumber + 1)}
       >
-        {isLast ? 'Hết' : `Tập ${chapter.chapterNumber + 1}`}
+        Tập {chapter.chapterNumber + 1}
       </Button>
     </Box>
   )

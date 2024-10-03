@@ -38,23 +38,23 @@ export default function Page({ params }: { params: { id: number } }) {
   const [relatedProduct, setRelatedProduct] = useState<IProduct[]>([])
   const [rates, setRates] = useState<IRate[]>([])
 
-  const fetchApi = async () => {
-    const [products, product, chapters, rates] = await Promise.all([
-      getApi<IProduct[]>('product'),
-      getOne<IProduct>('product', params.id),
-      getApi<IChapter[]>(`product/${params.id}/chapter`),
-      getApi<IRate[]>(`product/${params.id}/rate`),
-    ])
-
-    setRelatedProduct(products.filter(prod => prod.id !== +params.id))
-    setProduct(product)
-    setChapters(chapters)
-    setRates(rates)
-  }
-
   useEffect(() => {
+    const fetchApi = async () => {
+      const [products, product, chapters, rates] = await Promise.all([
+        getApi<IProduct[]>('product'),
+        getOne<IProduct>('product', params.id),
+        getApi<IChapter[]>(`product/${params.id}/chapter`),
+        getApi<IRate[]>(`product/${params.id}/rate`),
+      ])
+
+      setRelatedProduct(products.filter(prod => prod.id !== +params.id))
+      setProduct(product)
+      setChapters(chapters)
+      setRates(rates)
+    }
+
     fetchApi()
-  }, [flag])
+  }, [flag, params.id])
 
   const handleChapterClick = (chap: IChapter) => {
     return router.push(`/product/${chap.productId}/chapter/${chap.chapterNumber}`)
@@ -114,7 +114,7 @@ export default function Page({ params }: { params: { id: number } }) {
           />
         </Box>
         <Box className="lg:col-span-5">
-          <Box className="px-5 pb-0 lg:pt-5 rounded-md">
+          <Box className="lg:px-5 pb-0 lg:pt-5 rounded-md">
             <Box className="flex flex-col justify-center items-center">
               <Typography variant="h4" className="font-bold text-center">
                 {product.name}
@@ -164,7 +164,7 @@ export default function Page({ params }: { params: { id: number } }) {
               </Box>
             </Box>
             {product.categories && (
-              <Box className="mt-4 flex flex-wrap gap-2">
+              <Box className="my-4 flex flex-wrap gap-2">
                 {product.categories.map(cate => (
                   <Chip key={cate.id} label={cate.name} />
                 ))}
@@ -177,7 +177,7 @@ export default function Page({ params }: { params: { id: number } }) {
         </Box>
       </Box>
 
-      <Divider className="w-full mb-10 mt-10" />
+      <Divider className="w-full !my-10" />
 
       <Box component={'section'}>
         <TableContainer sx={{ boxShadow: 'none' }} component={Paper}>
