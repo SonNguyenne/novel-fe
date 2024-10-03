@@ -3,7 +3,7 @@ export function _handleParams(url: URL, params: Record<string, string> = {}) {
   return url
 }
 
-export async function _handleReponse<T>(res: any) {
+export async function _handleReponse<T>(res: Response) {
   const json = await res.json()
 
   if (!res.ok) throw json

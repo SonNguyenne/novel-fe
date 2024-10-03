@@ -19,14 +19,12 @@ import {
   Typography,
 } from '@mui/material'
 import { useRouter } from 'next/navigation'
-import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import React from 'react'
-import VisibilityIcon from '@mui/icons-material/Visibility'
-import { Star } from '@mui/icons-material'
 import { formatDatetime } from '@/utils'
-import { IProduct } from './types'
+import { IProduct } from '@/types'
 import { getApi } from '@/api'
+import { ProductGrid } from '@/components/grids'
 
 export default function Home() {
   const router = useRouter()
@@ -46,44 +44,8 @@ export default function Home() {
   return (
     <Container maxWidth="xl">
       <Typography variant="h4">Truyện Hot</Typography>
-      <Box className="mt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-4">
-        {!products || loading
-          ? Array.from({ length: 12 }).map((_, i) => (
-              <Skeleton key={i} variant="rectangular" width="100%" height={270} />
-            ))
-          : products.slice(0, 12).map(prod => {
-              return (
-                <Box key={prod.id}>
-                  <Link href={`/product/${prod.id}`}>
-                    <Box className="overflow-hidden rounded h-[270px]">
-                      <img
-                        className="hover:scale-110 transition-all object-cover w-full h-full object-center"
-                        src={prod.image}
-                        alt={prod.name}
-                        loading="lazy"
-                      />
-                    </Box>
-                  </Link>
 
-                  <Box className="w-full">
-                    <Box className="py-2 flex flex-wrap justify-between items-center gap-2">
-                      <Typography className="font-semibold">{prod.name}</Typography>
-                      <Typography className="text-gray-400">{prod.authorName}</Typography>
-                    </Box>
-                    <Box className="text-gray-400 flex flex-wrap justify-between items-center gap-2">
-                      <Typography>{prod.chapterCount} chapters</Typography>
-                      <Box className="text-gray-400 flex items-center space-x-1">
-                        <Typography>{prod.averageRate}</Typography>
-                        <VisibilityIcon fontSize="small" />
-                        <Typography>{prod.averageRate}</Typography>
-                        <Star fontSize="small" />
-                      </Box>
-                    </Box>
-                  </Box>
-                </Box>
-              )
-            })}
-      </Box>
+      <ProductGrid products={products} loading={loading} />
 
       <Divider className="pt-10 md:pt-20" />
 

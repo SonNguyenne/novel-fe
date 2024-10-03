@@ -15,7 +15,7 @@ import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import { useRouter } from 'next/navigation'
 import { postApi } from '@/api'
-import { LoginRequest, LoginResponse } from '../types'
+import { LoginRequest, LoginResponse } from '@/types'
 import { useAuth } from '@/hooks'
 
 const Login = () => {

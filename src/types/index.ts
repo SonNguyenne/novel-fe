@@ -1,6 +1,6 @@
 export enum PRODUCT_STATUS {
   PROGRESS = 'PROGRESS',
-  ENUM = 'ENUM',
+  DONE = 'DONE',
 }
 
 export interface IProduct {
@@ -17,6 +17,25 @@ export interface IProduct {
   updatedAt: string
   averageRate: number
   chapterCount: number
+  categories?: ICategory[]
+}
+
+export interface ICategory {
+  id: number
+  name: string
+  description?: string
+}
+
+export interface IChapter {
+  id: number
+  productId: number
+  chapterName: string
+  content: string
+  chapterNumber: number
+  price: number
+  createdAt: string
+  updatedAt: string
+  users: number[]
 }
 
 export interface User {

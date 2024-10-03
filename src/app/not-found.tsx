@@ -10,12 +10,13 @@ const NotFound = () => {
     <Box
       sx={{
         display: 'flex',
+        direction: 'column',
         justifyContent: 'center',
         alignItems: 'center',
       }}
       className="flex-1"
     >
-      <Grid container spacing={2} className="flex flex-col lg:flex-row justify-center items-center gap-4">
+      <Grid container spacing={2} className="flex flex-col justify-center items-center gap-4">
         <Grid xs={6} className="lg:order-1 flex flex-col justify-center items-center">
           <Typography variant="h1">404</Typography>
           <Typography variant="h6" className="text-center">
