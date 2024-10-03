@@ -34,13 +34,13 @@ export default function Home() {
   const [products, setProducts] = useState<IProduct[]>([])
 
   useEffect(() => {
-    const fetch = async () => {
+    const fetchApi = async () => {
       const data = await getApi<IProduct[]>('product')
       setProducts(data)
       setLoading(false)
     }
 
-    fetch()
+    fetchApi()
   }, [])
 
   return (
@@ -95,7 +95,7 @@ export default function Home() {
               <List>
                 {!products || loading
                   ? Array.from({ length: 10 }).map((_, i) => (
-                      <Skeleton key={i} variant="text" sx={{ fontSize: 18, marginBottom: '12px' }} />
+                      <Skeleton key={i} variant="text" className="mx-4 mb-3 text-lg" />
                     ))
                   : products.map(prod => {
                       return (
@@ -124,21 +124,14 @@ export default function Home() {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {!products || loading
+                  {!products && loading
                     ? Array.from({ length: 7 }).map((_, i) => (
                         <TableRow key={i}>
-                          <TableCell component="th" scope="row">
-                            <Skeleton variant="rectangular" width="100%" />
-                          </TableCell>
-                          <TableCell component="th" scope="row">
-                            <Skeleton variant="rectangular" width="100%" />
-                          </TableCell>
-                          <TableCell component="th" scope="row">
-                            <Skeleton variant="rectangular" width="100%" />
-                          </TableCell>
-                          <TableCell component="th" scope="row">
-                            <Skeleton variant="rectangular" width="100%" />
-                          </TableCell>
+                          {Array.from({ length: 4 }).map((_, i) => (
+                            <TableCell key={i} component="th" scope="row">
+                              <Skeleton variant="rectangular" width="100%" />
+                            </TableCell>
+                          ))}
                         </TableRow>
                       ))
                     : products
