@@ -5,9 +5,8 @@ export async function getApi<T>(
   params: Record<string, string> = {},
   headers: Record<string, string> = {},
 ): Promise<T> {
-  const baseUrl = new URL(`${process.env.API_BASE_URL}/${endpoint}`)
+  const baseUrl = new URL(`${process.env.NEXT_PUBLIC_API_BASE_URL}/${endpoint}`)
   const url = _handleParams(baseUrl, params)
-
   return _handleReponse(await fetch(url.toString(), { headers: { ...headers, 'Content-Type': 'application/json' } }))
 }
 
@@ -17,7 +16,7 @@ export async function getOne<T>(
   params: Record<string, string> = {},
   headers: Record<string, string> = {},
 ): Promise<T> {
-  const baseUrl = new URL(`${process.env.API_BASE_URL}/${endpoint}/${id}`)
+  const baseUrl = new URL(`${process.env.NEXT_PUBLIC_API_BASE_URL}/${endpoint}/${id}`)
   const url = _handleParams(baseUrl, params)
 
   return _handleReponse(await fetch(url.toString(), { headers: { ...headers, 'Content-Type': 'application/json' } }))
@@ -29,7 +28,7 @@ export async function postApi<T, U>(
   params: Record<string, string> = {},
   headers: Record<string, string> = {},
 ): Promise<T> {
-  const baseUrl = new URL(`${process.env.API_BASE_URL}/${endpoint}`)
+  const baseUrl = new URL(`${process.env.NEXT_PUBLIC_API_BASE_URL}/${endpoint}`)
   const url = _handleParams(baseUrl, params)
 
   return _handleReponse(
@@ -48,7 +47,7 @@ export async function postOne<T, U>(
   params: Record<string, string> = {},
   headers: Record<string, string> = {},
 ): Promise<T> {
-  const baseUrl = new URL(`${process.env.API_BASE_URL}/${endpoint}/${id}`)
+  const baseUrl = new URL(`${process.env.NEXT_PUBLIC_API_BASE_URL}/${endpoint}/${id}`)
   const url = _handleParams(baseUrl, params)
 
   return _handleReponse(
@@ -67,7 +66,7 @@ export async function patchOne<T, U>(
   params: Record<string, string> = {},
   headers: Record<string, string> = {},
 ): Promise<T> {
-  const baseUrl = new URL(`${process.env.API_BASE_URL}/${endpoint}/${id}`)
+  const baseUrl = new URL(`${process.env.NEXT_PUBLIC_API_BASE_URL}/${endpoint}/${id}`)
   const url = _handleParams(baseUrl, params)
 
   return _handleReponse(
@@ -85,7 +84,7 @@ export async function deleteOne<T>(
   params: Record<string, string> = {},
   headers: Record<string, string> = {},
 ): Promise<T> {
-  const baseUrl = new URL(`${process.env.API_BASE_URL}/${endpoint}/${id}`)
+  const baseUrl = new URL(`${process.env.NEXT_PUBLIC_API_BASE_URL}/${endpoint}/${id}`)
   const url = _handleParams(baseUrl, params)
 
   return _handleReponse(
