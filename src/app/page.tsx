@@ -57,7 +57,7 @@ export default function Home() {
               <List>
                 {!products || loading
                   ? Array.from({ length: 10 }).map((_, i) => (
-                      <Skeleton key={i} variant="text" className="mx-4 mb-3 text-lg" />
+                      <Skeleton key={i} variant="text" className="mx-4 !mb-3 text-lg" />
                     ))
                   : products.map(prod => {
                       return (
@@ -86,7 +86,7 @@ export default function Home() {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {!products && loading
+                  {!products || loading
                     ? Array.from({ length: 7 }).map((_, i) => (
                         <TableRow key={i}>
                           {Array.from({ length: 4 }).map((_, i) => (

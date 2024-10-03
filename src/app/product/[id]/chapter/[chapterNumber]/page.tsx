@@ -41,7 +41,7 @@ export default function Page({ params }: { params: { id: number; chapterNumber: 
 
         <Box>
           <Typography
-            variant="body2"
+            variant="body1"
             className="py-5 leading-10 tracking-wider"
             dangerouslySetInnerHTML={{ __html: chapter.content }}
           />

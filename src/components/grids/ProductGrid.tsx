@@ -12,7 +12,7 @@ export interface IProductGrid {
 
 export const ProductGrid = ({ products, limit = 12, loading }: IProductGrid) => {
   return (
-    <Box className="mt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-4">
+    <Box className="mt-4 grid grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-4">
       {!products || loading
         ? Array.from({ length: limit }).map((_, i) => (
             <Skeleton key={i} variant="rectangular" width="100%" height={270} />
