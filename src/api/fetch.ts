@@ -8,7 +8,7 @@ export async function getApi<T>(
   const baseUrl = new URL(`${process.env.API_BASE_URL}/${endpoint}`)
   const url = _handleParams(baseUrl, params)
 
-  return _handleReponse(await fetch(url.toString(), { headers }))
+  return _handleReponse(await fetch(url.toString(), { headers: { ...headers, 'Content-Type': 'application/json' } }))
 }
 
 export async function getOne<T>(
@@ -20,7 +20,7 @@ export async function getOne<T>(
   const baseUrl = new URL(`${process.env.API_BASE_URL}/${endpoint}/${id}`)
   const url = _handleParams(baseUrl, params)
 
-  return _handleReponse(await fetch(url.toString(), { headers }))
+  return _handleReponse(await fetch(url.toString(), { headers: { ...headers, 'Content-Type': 'application/json' } }))
 }
 
 export async function postApi<T, U>(
@@ -32,7 +32,13 @@ export async function postApi<T, U>(
   const baseUrl = new URL(`${process.env.API_BASE_URL}/${endpoint}`)
   const url = _handleParams(baseUrl, params)
 
-  return _handleReponse(await fetch(url.toString(), { headers, method: 'POST', body: JSON.stringify(data) }))
+  return _handleReponse(
+    await fetch(url.toString(), {
+      headers: { ...headers, 'Content-Type': 'application/json' },
+      method: 'POST',
+      body: JSON.stringify(data),
+    }),
+  )
 }
 
 export async function postOne<T, U>(
@@ -45,7 +51,13 @@ export async function postOne<T, U>(
   const baseUrl = new URL(`${process.env.API_BASE_URL}/${endpoint}/${id}`)
   const url = _handleParams(baseUrl, params)
 
-  return _handleReponse(await fetch(url.toString(), { headers, method: 'POST', body: JSON.stringify(data) }))
+  return _handleReponse(
+    await fetch(url.toString(), {
+      headers: { ...headers, 'Content-Type': 'application/json' },
+      method: 'POST',
+      body: JSON.stringify(data),
+    }),
+  )
 }
 
 export async function patchOne<T, U>(
@@ -58,7 +70,13 @@ export async function patchOne<T, U>(
   const baseUrl = new URL(`${process.env.API_BASE_URL}/${endpoint}/${id}`)
   const url = _handleParams(baseUrl, params)
 
-  return _handleReponse(await fetch(url.toString(), { headers, method: 'PATCH', body: JSON.stringify(data) }))
+  return _handleReponse(
+    await fetch(url.toString(), {
+      headers: { ...headers, 'Content-Type': 'application/json' },
+      method: 'PATCH',
+      body: JSON.stringify(data),
+    }),
+  )
 }
 
 export async function deleteOne<T>(
@@ -70,5 +88,7 @@ export async function deleteOne<T>(
   const baseUrl = new URL(`${process.env.API_BASE_URL}/${endpoint}/${id}`)
   const url = _handleParams(baseUrl, params)
 
-  return _handleReponse(await fetch(url.toString(), { headers, method: 'DELETE' }))
+  return _handleReponse(
+    await fetch(url.toString(), { headers: { ...headers, 'Content-Type': 'application/json' }, method: 'DELETE' }),
+  )
 }

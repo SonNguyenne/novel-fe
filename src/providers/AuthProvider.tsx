@@ -9,7 +9,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [token, setToken] = useState<string | null>(null)
 
   const login = (token: string, userData: User) => {
-    console.log('----------userData: ', userData)
     setToken(token)
     setUser(userData)
     localStorage.setItem('token', token)

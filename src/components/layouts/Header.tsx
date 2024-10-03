@@ -21,7 +21,7 @@ import { useAuth } from '@/hooks'
 import { Tooltip } from '@mui/material'
 
 export const Header = () => {
-  const { token } = useAuth()
+  const { token, logout } = useAuth()
   const router = useRouter()
   const [open, setOpen] = React.useState(false)
   const toggleDrawer = (newOpen: boolean) => () => {
@@ -162,8 +162,7 @@ export const Header = () => {
                   size="small"
                   component="a"
                   onClick={() => {
-                    window.location.reload()
-                    localStorage.removeItem('authToken')
+                    logout()
                   }}
                 >
                   Log out

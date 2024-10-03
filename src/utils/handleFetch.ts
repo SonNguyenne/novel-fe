@@ -3,9 +3,10 @@ export function _handleParams(url: URL, params: Record<string, string> = {}) {
   return url
 }
 
-export function _handleReponse<T>(res: any) {
-  if (!res.ok) {
-    throw new Error(`Failed to fetch: ${res.statusText}`)
-  }
-  return res.json() as Promise<T>
+export async function _handleReponse<T>(res: any) {
+  const json = await res.json()
+
+  if (!res.ok) throw json
+
+  return json as Promise<T>
 }
