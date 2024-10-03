@@ -38,6 +38,15 @@ export interface IChapter {
   users: number[]
 }
 
+export interface IRate {
+  id: number
+  userId: number
+  productId: number
+  rating: number
+  createdAt: string
+  updatedAt: string
+}
+
 export interface User {
   id: number
   name: string

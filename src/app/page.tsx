@@ -52,7 +52,7 @@ export default function Home() {
       <Box className="pt-16 md:pt-20 grid lg:grid-cols-4 gap-10">
         <Box className="lg:col-span-1 lg:order-2">
           <Typography variant="h4">Truyện yêu thích</Typography>
-          <Box className="mt-4 overflow-y-scroll max-h-[620px]">
+          <Box className="mt-4 overflow-y-auto max-h-[620px]">
             <Box className="w-full rounded border border-transparent bg-gray-200">
               <List>
                 {!products || loading

@@ -16,18 +16,19 @@ import {
   Typography,
 } from '@mui/material'
 import TablePaginationActions from '@mui/material/TablePagination/TablePaginationActions'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Rating from '@mui/material/Rating'
-import { IChapter, IProduct, PRODUCT_STATUS } from '@/types'
+import { IChapter, IProduct, IRate, PRODUCT_STATUS } from '@/types'
 import { formatCurrency, formatDatetime } from '@/utils'
-import { getApi, getOne } from '@/api'
+import { getApi, getOne, patchOne, postApi } from '@/api'
 import { useAuth } from '@/hooks'
 import { ProductGrid } from '@/components/grids'
 
 export default function Page({ params }: { params: { id: number } }) {
   const router = useRouter()
   const { user } = useAuth()
+  const [flag, setFlag] = useState(false)
   const [page, setPage] = React.useState(0)
   const [rowsPerPage, setChaptersPerPage] = React.useState(5)
   // const [openPopup, setOpenPopup] = useState(false)
@@ -35,23 +36,32 @@ export default function Page({ params }: { params: { id: number } }) {
   const [chapters, setChapters] = useState<IChapter[]>([])
   const [product, setProduct] = useState<IProduct>()
   const [relatedProduct, setRelatedProduct] = useState<IProduct[]>([])
+  const [rates, setRates] = useState<IRate[]>([])
 
-  React.useLayoutEffect(() => {
-    getApi<IProduct[]>('product').then(res => {
-      setRelatedProduct(res.filter(prod => prod.id !== +params.id))
-    })
+  const fetchApi = async () => {
+    const [products, product, chapters, rates] = await Promise.all([
+      getApi<IProduct[]>('product'),
+      getOne<IProduct>('product', params.id),
+      getApi<IChapter[]>(`product/${params.id}/chapter`),
+      getApi<IRate[]>(`product/${params.id}/rate`),
+    ])
 
-    getOne<IProduct>('product', params.id).then(res => setProduct(res))
+    setRelatedProduct(products.filter(prod => prod.id !== +params.id))
+    setProduct(product)
+    setChapters(chapters)
+    setRates(rates)
+  }
 
-    getApi<IChapter[]>(`product/${params.id}/chapter`).then(res => setChapters(res))
-  }, [])
+  useEffect(() => {
+    fetchApi()
+  }, [flag])
 
   const handleChapterClick = (chap: IChapter) => {
     if (!user) return router.push('/login')
 
     if (chap.price > 0 && user && !chap.users.includes(+user.id)) {
       // setChapter({ ...chap, productId: params?.id })
-      // setOpenPopup(true)
+      // setOpenPopup(true)}
     } else {
       router.push(`/products/${params?.id}/chapters/${chap.chapterNumber}`)
     }
@@ -71,6 +81,25 @@ export default function Page({ params }: { params: { id: number } }) {
   }
 
   if (!product) return null
+
+  const handleRating = (val: number | null) => {
+    // TODO: Remove rate
+    if (!val) return
+
+    if (!user) return router.push('/login')
+
+    const existingRate = rates.find(rate => rate.userId === user.id)
+
+    setFlag(!flag)
+
+    if (!existingRate) {
+      return postApi('rate', { userId: user.id, productId: product.id, rating: val })
+    }
+
+    if (existingRate && existingRate.rating === val) return
+    return patchOne(`rate`, existingRate.id, { rating: val })
+  }
+
   return (
     <Container maxWidth="xl">
       <Box component={'section'} className="grid lg:grid-cols-7 gap-8">
@@ -88,22 +117,18 @@ export default function Page({ params }: { params: { id: number } }) {
               <Typography variant="h4" className="font-bold text-center">
                 {product.name}
               </Typography>
-              {product.averageRate && (
-                <Box className="flex flex-col items-center">
-                  <Rating
-                    name="simple-controlled"
-                    value={product.averageRate}
-                    size="small"
-                    // onChange={(event, newValue) => {
-                    //   setValue(newValue);
-                    // }}
-                  />
+              <Box className="flex flex-col items-center">
+                <Rating
+                  name="simple-controlled"
+                  value={product.averageRate || 0}
+                  size="small"
+                  onChange={(e, val) => handleRating(val)}
+                />
 
-                  <Typography variant="body2" color="textSecondary">
-                    (369 lượt đánh giá)
-                  </Typography>
-                </Box>
-              )}
+                <Typography variant="body2" color="textSecondary">
+                  ({rates.length} lượt đánh giá)
+                </Typography>
+              </Box>
             </Box>
 
             <Box className="mt-6 flex flex-col gap-2">

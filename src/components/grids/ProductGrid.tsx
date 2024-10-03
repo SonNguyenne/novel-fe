@@ -39,7 +39,7 @@ export const ProductGrid = ({ products, limit = 12, loading }: IProductGrid) => 
                   <Box className="text-gray-400 flex flex-wrap justify-between items-center gap-2">
                     <Typography>{prod.chapterCount} chapters</Typography>
                     <Box className="text-gray-400 flex items-center space-x-1">
-                      <Typography>{prod.averageRate}</Typography>
+                      <Typography>{prod.viewCount}</Typography>
                       <VisibilityIcon fontSize="small" />
                       <Typography>{prod.averageRate}</Typography>
                       <Star fontSize="small" />

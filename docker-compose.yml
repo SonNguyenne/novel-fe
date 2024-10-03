@@ -1,7 +1,8 @@
 services:
   web:
-    image: son29032001/novel-fe:latest
+    image: son29032001/novel-fe
     container_name: web
+    restart: unless-stopped
     build: .
     restart: unless-stopped
     ports:
