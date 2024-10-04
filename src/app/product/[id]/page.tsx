@@ -104,18 +104,17 @@ export default function Page({ params }: { params: { id: number } }) {
 
     setFlag(!flag)
 
-    // TODO: NOT WORK
     if (!existingRate) {
-      return fetch('/api/rate', {
+      return fetch(`/api/rate`, {
         method: 'POST',
         body: JSON.stringify({ userId: user.id, productId: product.id, rating }),
       })
     }
 
     if (existingRate && existingRate.rating === rating) return
-    return fetch('/api/rate', {
+    return fetch(`/api/rate/${existingRate.id}`, {
       method: 'PATCH',
-      body: JSON.stringify({ rateId: existingRate.id, rating }),
+      body: JSON.stringify({ rating }),
     })
   }
 

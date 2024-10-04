@@ -7,14 +7,12 @@ import TextField from '@mui/material/TextField'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Checkbox from '@mui/material/Checkbox'
 import Link from '@mui/material/Link'
-import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import { useRouter } from 'next/navigation'
-import { postApi } from '@/lib/api'
-import { LoginRequest, LoginResponse } from '@/types'
+import { LoginResponse } from '@/types'
 import { useAuth } from '@/hooks'
 
 const Login = () => {
@@ -31,21 +29,23 @@ const Login = () => {
 
     if (!email || !password) return
 
-    try {
-      const res = await fetch('api/auth/login', {
-        method: 'POST',
-        body: JSON.stringify({ email, password }),
+    return await fetch('api/auth/login', {
+      method: 'POST',
+      body: JSON.stringify({ email, password }),
+    })
+      .then(async res => {
+        const json = await res.json()
+        if (!res.ok) throw new Error(json.message)
+
+        const data = json as LoginResponse
+        login(data.token, data.data)
+
+        return router.push('/')
       })
-
-      if (!res.ok) throw new Error('Đăng nhập thất bại')
-
-      const data = (await res.json()) as LoginResponse
-      login(data.token, data.data)
-
-      return router.push('/')
-    } catch {
-      throw new Error('Đăng nhập thất bại')
-    }
+      .catch(err => {
+        console.error(err)
+        return setErrorText(err.message)
+      })
   }
 
   React.useEffect(() => {
@@ -106,18 +106,15 @@ const Login = () => {
           <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
             Sign In
           </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
-            <Grid item>
-              <Link href="/register" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
-            </Grid>
-          </Grid>
+
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
+            <Link href="#" variant="body2">
+              Forgot password?
+            </Link>
+            <Link href="/register" variant="body2">
+              {"Don't have an account? Sign Up"}
+            </Link>
+          </Box>
         </Box>
       </Box>
     </Container>

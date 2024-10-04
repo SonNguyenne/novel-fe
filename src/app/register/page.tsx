@@ -7,7 +7,7 @@ import TextField from '@mui/material/TextField'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Checkbox from '@mui/material/Checkbox'
 import Link from '@mui/material/Link'
-import Grid from '@mui/material/Grid'
+import Grid from '@mui/material/Grid2'
 import Box from '@mui/material/Box'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
@@ -28,21 +28,19 @@ const Register = () => {
     event.preventDefault()
     setSubmit(true)
 
-    if (!firstName || !lastName || !email || !password) {
-      return
-    }
+    if (!firstName || !lastName || !email || !password) return
 
-    if (checked === false) {
-      setErrorText('Please accept the terms and conditions')
-      return
-    }
+    if (checked === false) return setErrorText('Please accept the terms and conditions')
 
     return fetch('api/auth/register', {
       method: 'POST',
       body: JSON.stringify({ name: lastName + ' ' + firstName, email, password }),
     })
-      .then(() => {
-        router.push('/login')
+      .then(async res => {
+        const json = await res.json()
+        if (!res.ok) throw new Error(json.message)
+
+        return router.push('/login')
       })
       .catch((err: Error) => setErrorText(err.message))
   }
@@ -65,7 +63,7 @@ const Register = () => {
         </Typography>
         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
+            <Grid size={6}>
               <TextField
                 autoComplete="given-name"
                 name="firstName"
@@ -81,7 +79,7 @@ const Register = () => {
                 helperText={submit && !firstName ? 'This field is required' : ''}
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid size={6}>
               <TextField
                 required
                 fullWidth
@@ -96,7 +94,7 @@ const Register = () => {
                 helperText={submit && !lastName ? 'This field is required' : ''}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid size={12}>
               <TextField
                 required
                 fullWidth
@@ -111,7 +109,7 @@ const Register = () => {
                 helperText={submit && !email ? 'This field is required' : ''}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid size={12}>
               <TextField
                 required
                 fullWidth
@@ -127,7 +125,7 @@ const Register = () => {
                 helperText={submit && !password ? 'This field is required' : ''}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid size={12}>
               <FormControlLabel
                 control={
                   <Checkbox
@@ -147,7 +145,7 @@ const Register = () => {
             Sign Up
           </Button>
           <Grid container justifyContent="flex-end">
-            <Grid item>
+            <Grid>
               <Link href="/login" variant="body2">
                 Already have an account? Sign in
               </Link>

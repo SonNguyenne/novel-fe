@@ -29,13 +29,13 @@ export async function PATCH(request: NextRequest, { params }: IParams) {
 
   const resp = await patchOne(endpoint, id, body)
 
-  return NextResponse.json(resp, { status: 204 })
+  return NextResponse.json(resp, { status: 200 })
 }
 
 export async function DELETE(request: NextRequest, { params }: IParams) {
   const { endpoint, id } = params
 
-  const resp = await deleteOne(endpoint, id)
+  await deleteOne(endpoint, id)
 
-  return NextResponse.json(resp, { status: 204 })
+  return NextResponse.json({}, { status: 204 })
 }
