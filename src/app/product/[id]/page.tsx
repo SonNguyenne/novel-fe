@@ -20,8 +20,7 @@ import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Rating from '@mui/material/Rating'
 import { IChapter, IProduct, IRate, PRODUCT_STATUS } from '@/types'
-import { formatCurrency, formatDatetime } from '@/utils'
-import { getApi, getOne, patchOne, postApi } from '@/api'
+import { formatCurrency, formatDatetime } from '@/lib/utils'
 import { useAuth } from '@/hooks'
 import { ProductGrid } from '@/components/grids'
 
@@ -40,17 +39,26 @@ export default function Page({ params }: { params: { id: number } }) {
 
   useEffect(() => {
     const fetchApi = async () => {
-      const [products, product, chapters, rates] = await Promise.all([
-        getApi<IProduct[]>('product'),
-        getOne<IProduct>('product', params.id),
-        getApi<IChapter[]>(`product/${params.id}/chapter`),
-        getApi<IRate[]>(`product/${params.id}/rate`),
+      await Promise.all([
+        fetch('/api/product'),
+        fetch(`/api/product/${params.id}`),
+        fetch(`/api/product/${params.id}/chapter`),
+        fetch(`/api/product/${params.id}/rate`),
       ])
-
-      setRelatedProduct(products.filter(prod => prod.id !== +params.id))
-      setProduct(product)
-      setChapters(chapters)
-      setRates(rates)
+        .then(async ([productsResp, productResp, chaptersResp, ratesResp]) => {
+          return {
+            products: (await productsResp.json()) as IProduct[],
+            product: (await productResp.json()) as IProduct,
+            chapters: (await chaptersResp.json()) as IChapter[],
+            rates: (await ratesResp.json()) as IRate[],
+          }
+        })
+        .then(({ products, product, chapters, rates }) => {
+          setRelatedProduct(products.filter(prod => prod.id !== +params.id))
+          setProduct(product)
+          setChapters(chapters)
+          setRates(rates)
+        })
     }
 
     fetchApi()
@@ -84,22 +92,31 @@ export default function Page({ params }: { params: { id: number } }) {
 
   if (!product) return null
 
-  const handleRating = (val: number | null) => {
-    // TODO: Remove rate
-    if (!val) return
+  const handleRating = (rating: number | null) => {
+    // TODO: Remove rate api
+    if (!rating) return
 
     if (!user) return router.push('/login')
 
-    const existingRate = rates.find(rate => rate.userId === user.id)
+    const existingRate = rates.find(rate => {
+      return rate.userId === user.id
+    })
 
     setFlag(!flag)
 
+    // TODO: NOT WORK
     if (!existingRate) {
-      return postApi('rate', { userId: user.id, productId: product.id, rating: val })
+      return fetch('/api/rate', {
+        method: 'POST',
+        body: JSON.stringify({ userId: user.id, productId: product.id, rating }),
+      })
     }
 
-    if (existingRate && existingRate.rating === val) return
-    return patchOne(`rate`, existingRate.id, { rating: val })
+    if (existingRate && existingRate.rating === rating) return
+    return fetch('/api/rate', {
+      method: 'PATCH',
+      body: JSON.stringify({ rateId: existingRate.id, rating }),
+    })
   }
 
   return (
@@ -182,7 +199,7 @@ export default function Page({ params }: { params: { id: number } }) {
       <Box component={'section'}>
         <TableContainer sx={{ boxShadow: 'none' }} component={Paper}>
           <Typography variant="h5" className="p-2">
-            Chapters ({chapters.length})
+            Chương ({chapters.length})
           </Typography>
           <Table aria-label="simple table">
             <TableHead>

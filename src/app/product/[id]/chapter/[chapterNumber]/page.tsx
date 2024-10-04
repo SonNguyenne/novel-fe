@@ -1,8 +1,8 @@
 'use client'
+
 import { useEffect, useState } from 'react'
 import React from 'react'
 import { Box, Container, Typography } from '@mui/material'
-import { getApi, getOne } from '@/api'
 import { IChapter } from '@/types'
 import { ChapterActionButton } from '@/components'
 
@@ -16,13 +16,20 @@ export default function Page({ params }: IPageParams) {
 
   useEffect(() => {
     const fetchApi = async () => {
-      const [respChapters, resChapter] = await Promise.all([
-        getApi<IChapter[]>(`product/${params.id}/chapter`),
-        getOne<IChapter>(`product/${params.id}/chapter`, params.chapterNumber),
+      await Promise.all([
+        fetch(`/api/product/${params.id}/chapter`),
+        fetch(`/api/product/${params.id}/chapter/${params.chapterNumber}`),
       ])
-
-      setChapters(respChapters)
-      setChapter(resChapter)
+        .then(async ([chaptersResp, chapterResp]) => {
+          return {
+            chapters: (await chaptersResp.json()) as IChapter[],
+            chapter: (await chapterResp.json()) as IChapter,
+          }
+        })
+        .then(({ chapters, chapter }) => {
+          setChapters(chapters)
+          setChapter(chapter)
+        })
     }
 
     fetchApi()

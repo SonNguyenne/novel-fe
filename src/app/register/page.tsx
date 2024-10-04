@@ -3,7 +3,6 @@
 import React, { useState } from 'react'
 import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
-import CssBaseline from '@mui/material/CssBaseline'
 import TextField from '@mui/material/TextField'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Checkbox from '@mui/material/Checkbox'
@@ -14,7 +13,6 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import { useRouter } from 'next/navigation'
-import { postApi } from '@/api'
 
 const Register = () => {
   const router = useRouter()
@@ -39,10 +37,9 @@ const Register = () => {
       return
     }
 
-    return postApi('auth/register', {
-      name: lastName + ' ' + firstName,
-      email,
-      password,
+    return fetch('api/auth/register', {
+      method: 'POST',
+      body: JSON.stringify({ name: lastName + ' ' + firstName, email, password }),
     })
       .then(() => {
         router.push('/login')
@@ -52,7 +49,6 @@ const Register = () => {
 
   return (
     <Container component="main" maxWidth="xs" className="flex justify-center items-center">
-      <CssBaseline />
       <Box
         sx={{
           marginTop: 8,

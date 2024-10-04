@@ -2,6 +2,7 @@
 
 import {
   Box,
+  Chip,
   Container,
   Divider,
   List,
@@ -21,9 +22,8 @@ import {
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import React from 'react'
-import { formatDatetime } from '@/utils'
+import { _handleReponse, formatTimeAgo } from '@/lib/utils'
 import { IProduct } from '@/types'
-import { getApi } from '@/api'
 import { ProductGrid } from '@/components/grids'
 
 export default function Home() {
@@ -33,7 +33,8 @@ export default function Home() {
 
   useEffect(() => {
     const fetchApi = async () => {
-      const data = await getApi<IProduct[]>('product')
+      const resp = await fetch('/api/product')
+      const data = await _handleReponse<IProduct[]>(resp)
       setProducts(data)
       setLoading(false)
     }
@@ -51,7 +52,7 @@ export default function Home() {
 
       <Box className="pt-16 md:pt-20 grid lg:grid-cols-4 gap-10">
         <Box className="lg:col-span-1 lg:order-2">
-          <Typography variant="h4">Truyện yêu thích</Typography>
+          <Typography variant="h4">Yêu thích</Typography>
           <Box className="mt-4 overflow-y-auto max-h-[620px]">
             <Box className="w-full rounded border border-transparent">
               <List>
@@ -72,8 +73,9 @@ export default function Home() {
             </Box>
           </Box>
         </Box>
+
         <Box className="lg:col-span-3 lg:order-1">
-          <Typography variant="h4">Truyện mới</Typography>
+          <Typography variant="h4">Chương mới</Typography>
           <Paper sx={{ width: '100%', overflow: 'hidden', marginTop: 2 }}>
             <TableContainer sx={{ boxShadow: 'none', maxHeight: 620 }} component={Paper} className="overflow-auto">
               <Table aria-label="sticky table" stickyHeader>
@@ -81,15 +83,16 @@ export default function Home() {
                   <TableRow className="[&>*]:font-bold">
                     <TableCell>Tên</TableCell>
                     <TableCell>Tác giả</TableCell>
-                    <TableCell>Ngày đăng</TableCell>
                     <TableCell>Số lượng đọc</TableCell>
+                    <TableCell>Chương</TableCell>
+                    <TableCell>Ngày đăng</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {!products || loading
                     ? Array.from({ length: 7 }).map((_, i) => (
                         <TableRow key={i}>
-                          {Array.from({ length: 4 }).map((_, i) => (
+                          {Array.from({ length: 5 }).map((_, i) => (
                             <TableCell key={i} component="th" scope="row">
                               <Skeleton variant="rectangular" width="100%" />
                             </TableCell>
@@ -97,13 +100,16 @@ export default function Home() {
                         </TableRow>
                       ))
                     : products
-                        .sort((a, b) => b.viewCount - a.viewCount)
+                        .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime())
                         .map((prod, index) => (
                           <TableRow hover key={index} onClick={() => router.push(`/products/${prod.id}`)} role="button">
                             <TableCell>{prod.name}</TableCell>
                             <TableCell>{prod.authorName}</TableCell>
-                            <TableCell>{formatDatetime(prod.createdAt)}</TableCell>
                             <TableCell>{prod.viewCount}</TableCell>
+                            <TableCell>
+                              <Chip label={prod.chapterCount} color="primary" />
+                            </TableCell>
+                            <TableCell>{formatTimeAgo(prod.updatedAt)}</TableCell>
                           </TableRow>
                         ))}
                 </TableBody>

@@ -6,7 +6,7 @@ import { ArrowBack, ArrowForward } from '@mui/icons-material'
 import { Box, Button } from '@mui/material'
 import SettingsIcon from '@mui/icons-material/Settings'
 import { useRouter } from 'next/navigation'
-import { cn } from '@/utils'
+import { cn } from '@/lib/utils'
 
 export interface IChapterActionButton {
   chapter: IChapter

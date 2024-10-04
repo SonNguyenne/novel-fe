@@ -3,7 +3,6 @@
 import React, { useState } from 'react'
 import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
-import CssBaseline from '@mui/material/CssBaseline'
 import TextField from '@mui/material/TextField'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Checkbox from '@mui/material/Checkbox'
@@ -14,7 +13,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import { useRouter } from 'next/navigation'
-import { postApi } from '@/api'
+import { postApi } from '@/lib/api'
 import { LoginRequest, LoginResponse } from '@/types'
 import { useAuth } from '@/hooks'
 
@@ -26,21 +25,27 @@ const Login = () => {
   const [password, setPassword] = useState('')
   const [errorText, setErrorText] = useState('')
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     setSubmit(true)
 
     if (!email || !password) return
 
-    return postApi<LoginResponse, LoginRequest>('auth/login', {
-      email,
-      password,
-    })
-      .then(res => {
-        login(res.token, res.data)
-        router.push('/')
+    try {
+      const res = await fetch('api/auth/login', {
+        method: 'POST',
+        body: JSON.stringify({ email, password }),
       })
-      .catch((err: Error) => setErrorText(err.message))
+
+      if (!res.ok) throw new Error('Đăng nhập thất bại')
+
+      const data = (await res.json()) as LoginResponse
+      login(data.token, data.data)
+
+      return router.push('/')
+    } catch {
+      throw new Error('Đăng nhập thất bại')
+    }
   }
 
   React.useEffect(() => {
@@ -49,7 +54,6 @@ const Login = () => {
 
   return (
     <Container component="main" maxWidth="xs" className="flex justify-center items-center">
-      <CssBaseline />
       <Box
         sx={{
           marginTop: 8,
