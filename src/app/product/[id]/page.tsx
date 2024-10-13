@@ -2,7 +2,6 @@
 import {
   Box,
   Chip,
-  Container,
   Divider,
   Paper,
   Table,
@@ -23,6 +22,8 @@ import { IChapter, IProduct, IRate, PRODUCT_STATUS } from '@/types'
 import { formatCurrency, formatDatetime } from '@/lib/utils'
 import { useAuth } from '@/hooks'
 import { ProductGrid } from '@/components/grids'
+import Image from 'next/image'
+import { Container } from '@/components'
 
 export default function Page({ params }: { params: { id: number } }) {
   const router = useRouter()
@@ -109,22 +110,24 @@ export default function Page({ params }: { params: { id: number } }) {
         method: 'POST',
         body: JSON.stringify({ userId: user.id, productId: product.id, rating }),
       })
-    }
+    } else {
+      if (existingRate.rating === rating) return
 
-    if (existingRate && existingRate.rating === rating) return
-    return fetch(`/api/rate/${existingRate.id}`, {
-      method: 'PATCH',
-      body: JSON.stringify({ rating }),
-    })
+      return fetch(`/api/rate/${existingRate.id}`, {
+        method: 'PATCH',
+        body: JSON.stringify({ rating }),
+      })
+    }
   }
 
   return (
-    <Container maxWidth="xl">
-      <Box component={'section'} className="grid lg:grid-cols-7 gap-8">
-        <Box className="book-3d lg:col-span-2 relative h-[475px]">
-          <img
+    <Container>
+      <Box component={'section'} className="grid lg:grid-cols-7 gap-8 place-items-center md:place-items-start">
+        <Box className="book-3d relative h-60 w-40 md:h-[600px] md:w-[400px] lg:col-span-2">
+          <Image
             className="object-cover w-full h-full object-center rounded"
             src={product.image}
+            layout="fill"
             alt={product.name}
             draggable={false}
           />

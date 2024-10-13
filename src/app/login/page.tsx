@@ -10,10 +10,10 @@ import Link from '@mui/material/Link'
 import Box from '@mui/material/Box'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
-import Container from '@mui/material/Container'
 import { useRouter } from 'next/navigation'
 import { LoginResponse } from '@/types'
 import { useAuth } from '@/hooks'
+import { Container } from '@/components'
 
 const Login = () => {
   const router = useRouter()
@@ -38,7 +38,7 @@ const Login = () => {
         if (!res.ok) throw new Error(json.message)
 
         const data = json as LoginResponse
-        login(data.token, data.data)
+        login(data.access_token, data.data)
 
         return router.push('/')
       })
