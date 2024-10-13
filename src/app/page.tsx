@@ -37,7 +37,7 @@ export default function Home() {
       const resp = await fetch('/api/product')
       const data = await _handleReponse<IProduct[]>(resp)
       setProducts(data)
-      setDoneProducts(data.filter(d => d.status != PRODUCT_STATUS.DONE))
+      setDoneProducts(data.filter(d => d.status === PRODUCT_STATUS.DONE))
 
       const respCate = await fetch('/api/category')
       const dataCate = await _handleReponse<ICategory[]>(respCate)
