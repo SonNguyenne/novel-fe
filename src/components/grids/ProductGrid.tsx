@@ -3,49 +3,75 @@ import React from 'react'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import { Star } from '@mui/icons-material'
 import { IProduct } from '@/types'
+import Image from 'next/image'
+import { cn } from '@/lib'
 
 export interface IProductGrid {
   products: IProduct[]
   limit?: number
   loading?: boolean
+  showInfo?: boolean
 }
 
-export const ProductGrid = ({ products, limit = 12, loading }: IProductGrid) => {
+export const ProductGrid = ({ products, limit = 12, loading, showInfo = false }: IProductGrid) => {
   return (
-    <Box className="mt-4 grid grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-4">
+    <Box className="mt-4 grid grid-cols-3 min-[900px]:grid-cols-4 min-[1200px]:grid-cols-6 gap-1 sm:gap-2">
       {!products || loading
         ? Array.from({ length: limit }).map((_, i) => (
-            <Skeleton key={i} variant="rectangular" width="100%" height={270} />
+            <Box key={i} className="h-[180px] min-[600px]:h-[270px] min-[1200px]:h-[360px]">
+              <Skeleton variant="rectangular" width="100%" height="100%" />
+            </Box>
           ))
         : products.slice(0, limit).map(prod => {
             return (
-              <Box key={prod.id}>
-                <Link href={`/product/${prod.id}`}>
-                  <Box className="overflow-hidden rounded h-[270px]">
-                    <img
-                      className="hover:scale-110 transition-all object-cover w-full h-full object-center"
+              <Box key={prod.id} className="overflow-hidden">
+                <Link href={`/product/${prod.id}`} className="relative group">
+                  <Box className="h-[180px] min-[600px]:h-[270px] min-[1200px]:h-[360px] ">
+                    <Image
+                      className={cn(
+                        'object-cover w-full h-full object-center',
+                        !showInfo && `group-hover:scale-105 transition-all `,
+                      )}
+                      fill={true}
                       src={prod.image}
                       alt={prod.name}
                       loading="lazy"
                     />
                   </Box>
+
+                  {!showInfo && (
+                    <Box className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full p-2 text-center backdrop-blur-sm group-hover:py-5 group-hover:backdrop-blur-lg transition-all">
+                      <Typography variant="body1" className="text-[#f0f0f0]">
+                        {prod.name}
+                      </Typography>
+                    </Box>
+                  )}
                 </Link>
 
-                <Box className="w-full">
-                  <Box className="py-2 flex flex-wrap justify-between items-center gap-2">
-                    <Typography className="font-semibold">{prod.name}</Typography>
-                    <Typography className="text-gray-400">{prod.authorName}</Typography>
-                  </Box>
-                  <Box className="text-gray-400 flex flex-wrap justify-between items-center gap-2">
-                    <Typography>{prod.chapterCount} chapters</Typography>
-                    <Box className="text-gray-400 flex items-center space-x-1">
-                      <Typography>{prod.viewCount}</Typography>
-                      <VisibilityIcon fontSize="small" />
-                      <Typography>{prod.averageRate}</Typography>
-                      <Star fontSize="small" />
+                {showInfo && (
+                  <Box className="w-full">
+                    <Box className="py-2 flex flex-wrap justify-between items-center gap-2">
+                      <Typography className="font-semibold">{prod.name}</Typography>
+                    </Box>
+                    <Box className="text-gray-400 flex flex-wrap justify-between items-center gap-2">
+                      <Typography>{prod.chapterCount} chapters</Typography>
+                      <Box className="text-gray-400 flex items-center space-x-1">
+                        {prod.viewCount > 0 && (
+                          <>
+                            <Typography>{prod.viewCount}</Typography>
+                            <VisibilityIcon fontSize="small" />
+                          </>
+                        )}
+                        {prod.averageRate > 0 && (
+                          <>
+                            <Typography>{prod.averageRate}</Typography>
+                            <Star fontSize="small" />
+                          </>
+                        )}
+                      </Box>
                     </Box>
                   </Box>
-                </Box>
+                )}
               </Box>
             )
           })}

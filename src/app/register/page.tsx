@@ -11,8 +11,8 @@ import Grid from '@mui/material/Grid2'
 import Box from '@mui/material/Box'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
-import Container from '@mui/material/Container'
 import { useRouter } from 'next/navigation'
+import { Container } from '@/components'
 
 const Register = () => {
   const router = useRouter()

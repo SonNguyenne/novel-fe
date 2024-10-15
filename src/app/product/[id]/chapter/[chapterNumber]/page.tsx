@@ -11,15 +11,13 @@ interface IPageParams {
 }
 
 export default function Page({ params }: IPageParams) {
+  const { id, chapterNumber } = params
   const [chapter, setChapter] = useState<IChapter>()
   const [chapters, setChapters] = useState<IChapter[]>([])
 
   useEffect(() => {
     const fetchApi = async () => {
-      await Promise.all([
-        fetch(`/api/product/${params.id}/chapter`),
-        fetch(`/api/product/${params.id}/chapter/${params.chapterNumber}`),
-      ])
+      await Promise.all([fetch(`/api/product/${id}/chapter`), fetch(`/api/product/${id}/chapter/${chapterNumber}`)])
         .then(async ([chaptersResp, chapterResp]) => {
           return {
             chapters: (await chaptersResp.json()) as IChapter[],
@@ -33,7 +31,16 @@ export default function Page({ params }: IPageParams) {
     }
 
     fetchApi()
-  }, [params.chapterNumber, params.id])
+  }, [chapterNumber, id])
+
+  useEffect(() => {
+    const incrementViewCount = async () => {
+      // TODO: Cant send
+      await fetch(`/api/product/${id}/view`, { method: 'POST' })
+    }
+
+    incrementViewCount()
+  }, [id])
 
   if (!chapter) return
 
@@ -59,7 +66,7 @@ export default function Page({ params }: IPageParams) {
         </Box>
       </Box>
 
-      <ChapterActionButton chapter={chapter} count={chapters.length} />
+      <ChapterActionButton chapter={chapter} count={chapters.length} className="gap-2 " />
     </Container>
   )
 }

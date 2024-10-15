@@ -5,7 +5,6 @@ import Box from '@mui/material/Box'
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import Button from '@mui/material/Button'
-import Container from '@mui/material/Container'
 import Divider from '@mui/material/Divider'
 import Typography from '@mui/material/Typography'
 import MenuItem from '@mui/material/MenuItem'
@@ -19,6 +18,7 @@ import IconButton from '@mui/material/IconButton'
 import { ThemeModeButton } from '../buttons'
 import { useAuth } from '@/hooks'
 import { Tooltip } from '@mui/material'
+import { Container } from '@/components'
 
 export const Header = () => {
   const { token, logout } = useAuth()
@@ -52,7 +52,7 @@ export const Header = () => {
         mt: 2,
       }}
     >
-      <Container maxWidth="xl">
+      <Container>
         <Toolbar
           variant="regular"
           sx={theme => ({
@@ -197,26 +197,12 @@ export const Header = () => {
                 <MenuItem onClick={() => scrollToSection('faq')}>FAQ</MenuItem>
                 <Divider />
                 <MenuItem>
-                  <Button
-                    color="primary"
-                    variant="contained"
-                    component="a"
-                    href="/material-ui/getting-started/templates/sign-up/"
-                    target="_blank"
-                    sx={{ width: '100%' }}
-                  >
+                  <Button color="primary" variant="contained" component="a" href="/register" sx={{ width: '100%' }}>
                     Sign up
                   </Button>
                 </MenuItem>
                 <MenuItem>
-                  <Button
-                    color="primary"
-                    variant="outlined"
-                    component="a"
-                    href="/material-ui/getting-started/templates/sign-in/"
-                    target="_blank"
-                    sx={{ width: '100%' }}
-                  >
+                  <Button color="primary" variant="outlined" component="a" href="/login" sx={{ width: '100%' }}>
                     Sign in
                   </Button>
                 </MenuItem>
