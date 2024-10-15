@@ -35,10 +35,7 @@ const Login = () => {
     })
       .then(async res => {
         const json = await res.json()
-        if (!res.ok) throw new Error(json.message)
-
-        const data = json as LoginResponse
-        login(data.token, data.data)
+        console.log('json------>', json)
 
         return router.push('/')
       })
