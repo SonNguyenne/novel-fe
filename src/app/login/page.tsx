@@ -10,14 +10,9 @@ import Link from '@mui/material/Link'
 import Box from '@mui/material/Box'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
-import { useRouter } from 'next/navigation'
-// import { LoginResponse } from '@/types'
-// import { useAuth } from '@/hooks'
 import { Container } from '@/components'
 
 const Login = () => {
-  const router = useRouter()
-  // const { login } = useAuth()
   const [submit, setSubmit] = useState(false)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -34,20 +29,13 @@ const Login = () => {
       body: JSON.stringify({ email, password }),
     })
       .then(async res => {
-        const json = await res.json()
-        console.log('json------>', json)
-
-        return router.push('/')
+        window.location.href = '/'
       })
       .catch(err => {
         console.error(err)
         return setErrorText(err.message)
       })
   }
-
-  React.useEffect(() => {
-    router.prefetch('/')
-  }, [router])
 
   return (
     <Container component="main" maxWidth="xs" className="flex justify-center items-center">

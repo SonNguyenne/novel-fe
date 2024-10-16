@@ -16,12 +16,16 @@ import FavoriteIcon from '@mui/icons-material/Favorite'
 import Link from 'next/link'
 import IconButton from '@mui/material/IconButton'
 import { ThemeModeButton } from '../buttons'
-import { useAuth } from '@/hooks'
-import { Tooltip } from '@mui/material'
 import { Container } from '@/components'
+import { Tooltip } from '@mui/material'
+import _ from 'lodash'
 
-export const Header = () => {
-  const { token, logout } = useAuth()
+interface HeaderProps {
+  token?: string
+  logout?: () => void
+}
+
+export const Header: React.FC<HeaderProps> = ({ token, logout }) => {
   const router = useRouter()
   const [open, setOpen] = React.useState(false)
   const toggleDrawer = (newOpen: boolean) => () => {
@@ -197,12 +201,26 @@ export const Header = () => {
                 <MenuItem onClick={() => scrollToSection('faq')}>FAQ</MenuItem>
                 <Divider />
                 <MenuItem>
-                  <Button color="primary" variant="contained" component="a" href="/register" sx={{ width: '100%' }}>
+                  <Button
+                    color="primary"
+                    variant="contained"
+                    component="a"
+                    href="/material-ui/getting-started/templates/sign-up/"
+                    target="_blank"
+                    sx={{ width: '100%' }}
+                  >
                     Sign up
                   </Button>
                 </MenuItem>
                 <MenuItem>
-                  <Button color="primary" variant="outlined" component="a" href="/login" sx={{ width: '100%' }}>
+                  <Button
+                    color="primary"
+                    variant="outlined"
+                    component="a"
+                    href="/material-ui/getting-started/templates/sign-in/"
+                    target="_blank"
+                    sx={{ width: '100%' }}
+                  >
                     Sign in
                   </Button>
                 </MenuItem>

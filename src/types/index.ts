@@ -69,3 +69,8 @@ export interface LoginRequest {
   email: string
   password: string
 }
+
+export interface SessionLogin {
+  accessToken?: string
+  user?: User
+}

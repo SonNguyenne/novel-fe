@@ -20,14 +20,14 @@ import { useRouter } from 'next/navigation'
 import Rating from '@mui/material/Rating'
 import { IChapter, IProduct, IRate, PRODUCT_STATUS } from '@/types'
 import { formatCurrency, formatDatetime } from '@/lib/utils'
-import { useAuth } from '@/hooks'
 import { ProductGrid } from '@/components/grids'
 import Image from 'next/image'
 import { Container } from '@/components'
 
 export default function Page({ params }: { params: { id: number } }) {
   const router = useRouter()
-  const { user } = useAuth()
+  // const { user } = useAuth()
+  const user = null
   const [flag, setFlag] = useState(false)
   const [page, setPage] = React.useState(0)
   const [rowsPerPage, setChaptersPerPage] = React.useState(5)
