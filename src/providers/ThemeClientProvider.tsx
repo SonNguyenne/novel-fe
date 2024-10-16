@@ -11,7 +11,7 @@ export function ThemeClientProvider({ children }: { children: React.ReactNode })
 
   return (
     <ThemeProvider theme={theme}>
-      <CssBaseline />
+      <CssBaseline enableColorScheme />
       {children}
     </ThemeProvider>
   )
