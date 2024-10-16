@@ -166,7 +166,7 @@ export const Header: React.FC<HeaderProps> = ({ token, logout }) => {
                   size="small"
                   component="a"
                   onClick={() => {
-                    logout()
+                    // logout()
                   }}
                 >
                   Log out
