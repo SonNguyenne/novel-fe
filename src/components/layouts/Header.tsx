@@ -15,15 +15,27 @@ import { useRouter } from 'next/navigation'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import Link from 'next/link'
 import IconButton from '@mui/material/IconButton'
-import { ThemeModeButton } from '../buttons'
-import { Container } from '@/components'
 import { Tooltip } from '@mui/material'
-import _ from 'lodash'
+import { Container, ThemeModeButton } from '@/components'
+import PersonIcon from '@mui/icons-material/Person'
 
 interface HeaderProps {
   token?: string
   logout?: () => void
 }
+
+const pages = [
+  { name: 'Trang chủ', href: '/' },
+  { name: 'Danh sách', href: '/' },
+  { name: 'Thể loại', href: '/' },
+  { name: 'Phân loại', href: '/' },
+]
+
+// export const Header = () => {
+// TODO
+// let token: any = true
+// let logout: any
+// }
 
 export const Header: React.FC<HeaderProps> = ({ token, logout }) => {
   const router = useRouter()
@@ -85,7 +97,7 @@ export const Header: React.FC<HeaderProps> = ({ token, logout }) => {
             }}
           >
             <Link href="/">
-              <Box className="flex items-center gap-2">
+              <Box className="flex items-center gap-2" sx={{ mr: 2 }}>
                 <Image
                   className="h-10 sm:h-14 w-auto cursor-pointer"
                   src={'/logo.png'}
@@ -95,43 +107,26 @@ export const Header: React.FC<HeaderProps> = ({ token, logout }) => {
                   priority
                 />
 
-                <Typography color="primary" className="font-bold hidden sm:block sm:text-xl">
+                <Typography
+                  color="primary"
+                  variant="h5"
+                  sx={{ fontWeight: 'bold', display: { xs: 'none', md: 'block' } }}
+                >
                   ReadOrDead
                 </Typography>
               </Box>
             </Link>
-            {token && (
-              <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                <MenuItem
-                  onClick={() => router.push('/products-management')}
-                  sx={{ py: '6px', px: '12px' }}
-                  className="hover:bg-inherit hover:[&>*]:text-black"
-                >
-                  <Typography variant="body2" color="text.primary">
-                    My Products
-                  </Typography>
-                </MenuItem>
-                <MenuItem
-                  onClick={() => router.push('/categories-management')}
-                  sx={{ py: '6px', px: '12px' }}
-                  className="hover:bg-inherit hover:[&>*]:text-black"
-                >
-                  <Typography variant="body2" color="text.primary">
-                    Categories Management
-                  </Typography>
-                </MenuItem>
-                <MenuItem
-                  onClick={() => router.push('/chapters-management')}
-                  sx={{ py: '6px', px: '12px' }}
-                  className="hover:bg-inherit hover:[&>*]:text-black"
-                >
-                  <Typography variant="body2" color="text.primary">
-                    Chapters Management
-                  </Typography>
-                </MenuItem>
-              </Box>
-            )}
+            <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+              {pages.map(page => (
+                <Link href={page.href}>
+                  <Button variant="text" color="primary" size="large">
+                    {page.name}
+                  </Button>
+                </Link>
+              ))}
+            </Box>
           </Box>
+
           <Box
             sx={{
               display: { xs: 'none', md: 'flex' },
@@ -144,36 +139,32 @@ export const Header: React.FC<HeaderProps> = ({ token, logout }) => {
               <>
                 <Link href="/login">
                   <Button color="primary" variant="text" size="medium">
-                    Sign in
+                    Đăng nhập
                   </Button>
                 </Link>
                 <Link href="/register">
                   <Button color="primary" variant="contained" size="medium">
-                    Sign up
+                    Đăng kí
                   </Button>
                 </Link>
               </>
             ) : (
               <>
                 <Tooltip title="Favorite list" onClick={() => router.push('/list')}>
-                  <IconButton aria-label="delete" color="error" size="small">
-                    <FavoriteIcon fontSize="small" />
+                  <IconButton aria-label="delete" color="error">
+                    <FavoriteIcon />
                   </IconButton>
                 </Tooltip>
-                <Button
-                  color="primary"
-                  variant="text"
-                  size="small"
-                  component="a"
-                  onClick={() => {
-                    // logout()
-                  }}
-                >
-                  Log out
-                </Button>
+
+                <Tooltip title="Profile">
+                  <IconButton aria-label="profile" color="info">
+                    <PersonIcon />
+                  </IconButton>
+                </Tooltip>
               </>
             )}
           </Box>
+
           <Box sx={{ display: { sm: '', md: 'none' } }}>
             <ThemeModeButton />
             <Button
@@ -194,36 +185,37 @@ export const Header: React.FC<HeaderProps> = ({ token, logout }) => {
                   flexGrow: 1,
                 }}
               >
-                <MenuItem onClick={() => scrollToSection('features')}>Features</MenuItem>
-                <MenuItem onClick={() => scrollToSection('testimonials')}>Testimonials</MenuItem>
-                <MenuItem onClick={() => scrollToSection('highlights')}>Highlights</MenuItem>
-                <MenuItem onClick={() => scrollToSection('pricing')}>Pricing</MenuItem>
-                <MenuItem onClick={() => scrollToSection('faq')}>FAQ</MenuItem>
+                {pages.map(page => (
+                  <MenuItem onClick={() => router.push(page.href)}>{page.name}</MenuItem>
+                ))}
                 <Divider />
-                <MenuItem>
-                  <Button
-                    color="primary"
-                    variant="contained"
-                    component="a"
-                    href="/material-ui/getting-started/templates/sign-up/"
-                    target="_blank"
-                    sx={{ width: '100%' }}
-                  >
-                    Sign up
-                  </Button>
-                </MenuItem>
-                <MenuItem>
-                  <Button
-                    color="primary"
-                    variant="outlined"
-                    component="a"
-                    href="/material-ui/getting-started/templates/sign-in/"
-                    target="_blank"
-                    sx={{ width: '100%' }}
-                  >
-                    Sign in
-                  </Button>
-                </MenuItem>
+                {!token ? (
+                  <>
+                    <MenuItem>
+                      <Button color="primary" variant="contained" component="a" href="/login" sx={{ width: '100%' }}>
+                        Đăng nhập
+                      </Button>
+                    </MenuItem>
+                    <MenuItem>
+                      <Button color="primary" variant="outlined" component="a" href="/register" sx={{ width: '100%' }}>
+                        Đăng kí
+                      </Button>
+                    </MenuItem>
+                  </>
+                ) : (
+                  <MenuItem>
+                    <Button
+                      color="primary"
+                      variant="contained"
+                      component="a"
+                      href="/profile"
+                      sx={{ width: '100%' }}
+                      startIcon={<PersonIcon />}
+                    >
+                      Trang cá nhân
+                    </Button>
+                  </MenuItem>
+                )}
               </Box>
             </Drawer>
           </Box>

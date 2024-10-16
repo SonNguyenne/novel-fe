@@ -11,13 +11,13 @@ export const ThemeModeButton = () => {
 
   return mode === 'dark' ? (
     <Tooltip title="Dark mode" onClick={() => setMode('light')}>
-      <IconButton size="small">
+      <IconButton>
         <DarkMode />
       </IconButton>
     </Tooltip>
   ) : (
     <Tooltip title="Light mode" onClick={() => setMode('dark')}>
-      <IconButton color="primary" size="small">
+      <IconButton color="warning">
         <WbSunny />
       </IconButton>
     </Tooltip>
