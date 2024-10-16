@@ -1,11 +1,22 @@
 import NextAuth, { User } from 'next-auth'
+import { AdapterUser } from 'next-auth/adapters'
 import Credentials from 'next-auth/providers/credentials'
-// Your own logic for dealing with plaintext password strings; be careful!
+
+declare module 'next-auth' {
+  interface User {
+    access_token?: string
+  }
+
+  interface Session {
+    accessToken?: string
+    user: User
+  }
+}
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   secret: 'my-secret',
   callbacks: {
-    async jwt({ token, user }: any) {
+    async jwt({ token, user }) {
       if (user) {
         token.accessToken = user.access_token
         token.user = user
@@ -13,9 +24,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
       return token
     },
-    async session({ session, token }: any) {
-      session.accessToken = token.access_token
-      session.user = token.user
+    async session({ session, token }) {
+      session.accessToken = token.access_token as string
+      session.user = token.user as AdapterUser & User
       return session
     },
     async redirect({ url, baseUrl }) {

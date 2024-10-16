@@ -11,13 +11,13 @@ import Box from '@mui/material/Box'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
 import { useRouter } from 'next/navigation'
-import { LoginResponse } from '@/types'
-import { useAuth } from '@/hooks'
+// import { LoginResponse } from '@/types'
+// import { useAuth } from '@/hooks'
 import { Container } from '@/components'
 
 const Login = () => {
   const router = useRouter()
-  const { login } = useAuth()
+  // const { login } = useAuth()
   const [submit, setSubmit] = useState(false)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
