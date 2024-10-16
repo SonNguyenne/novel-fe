@@ -74,3 +74,7 @@ export interface SessionLogin {
   accessToken?: string
   user?: User
 }
+
+export interface UserRole {
+  role: 'ADMIN' | 'MANAGER' | string // Define other fields as needed
+}
