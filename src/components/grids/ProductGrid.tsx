@@ -19,7 +19,7 @@ export const ProductGrid = ({ products, limit = 12, loading, showInfo = false }:
       {!products || loading
         ? Array.from({ length: limit }).map((_, i) => (
             <Box key={i} className="h-[180px] min-[600px]:h-[270px] min-[1200px]:h-[360px]">
-              <Skeleton variant="rectangular" width="100%" height="100%" />
+              <Skeleton variant="rounded" width="100%" height="100%" />
             </Box>
           ))
         : products.slice(0, limit).map(prod => {
