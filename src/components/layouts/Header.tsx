@@ -16,12 +16,14 @@ import FavoriteIcon from '@mui/icons-material/Favorite'
 import Link from 'next/link'
 import IconButton from '@mui/material/IconButton'
 import { ThemeModeButton } from '../buttons'
-import { useAuth } from '@/hooks'
 import { Tooltip } from '@mui/material'
 import { Container } from '@/components'
 
 export const Header = () => {
-  const { token, logout } = useAuth()
+  // TODO
+  let token: any
+  let logout: any
+
   const router = useRouter()
   const [open, setOpen] = React.useState(false)
   const toggleDrawer = (newOpen: boolean) => () => {

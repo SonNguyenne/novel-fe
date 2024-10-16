@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import { Footer, Header, ScrollToTopButton } from '@/components'
-import { AuthProvider, ThemeClientProvider } from '@/providers'
+import { ThemeClientProvider } from '@/providers'
 
 export const metadata: Metadata = {
   title: 'Read or Dead',
@@ -16,19 +16,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <AuthProvider>
-          <ThemeClientProvider>
-            <Header />
+        <ThemeClientProvider>
+          <Header />
 
-            <main className="relative mt-28 min-h-[calc(100dvh-112px-90px)] flex flex-col">
-              {children}
+          <main className="relative mt-28 min-h-[calc(100dvh-112px-90px)] flex flex-col">
+            {children}
 
-              <ScrollToTopButton />
-            </main>
+            <ScrollToTopButton />
+          </main>
 
-            <Footer />
-          </ThemeClientProvider>
-        </AuthProvider>
+          <Footer />
+        </ThemeClientProvider>
       </body>
     </html>
   )
