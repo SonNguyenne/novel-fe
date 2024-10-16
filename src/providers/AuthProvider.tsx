@@ -18,7 +18,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
 
     if (storedUser && storedUser !== undefined) {
-      setUser(JSON.parse(storedUser))
+      // setUser(JSON.parse(storedUser))
     }
   }, [])
 
