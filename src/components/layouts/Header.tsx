@@ -15,9 +15,9 @@ import { useRouter } from 'next/navigation'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import Link from 'next/link'
 import IconButton from '@mui/material/IconButton'
-import { ThemeModeButton } from '../buttons'
+// import { ThemeModeButton } from '../buttons'
 import { Tooltip } from '@mui/material'
-import { Container } from '@/components'
+import { Container, ThemeModeButton } from '@/components'
 
 export const Header = () => {
   // TODO
