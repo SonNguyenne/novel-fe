@@ -1,4 +1,5 @@
 'use client'
+
 import {
   Box,
   Chip,
@@ -26,7 +27,7 @@ import { Container } from '@/components'
 
 export default function Page({ params }: { params: { id: number } }) {
   // TODO
-  let user: any
+  const user = { id: 1 }
 
   const router = useRouter()
   const [flag, setFlag] = useState(false)

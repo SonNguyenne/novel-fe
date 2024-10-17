@@ -27,9 +27,9 @@ const pages = [
 ]
 
 export const Header = () => {
-  // TODO
-  let token: any = true
-  let logout: any
+  // TODO: Remove comment
+  const token = true
+  // let logout
 
   const router = useRouter()
   const [open, setOpen] = React.useState(false)
@@ -37,19 +37,19 @@ export const Header = () => {
     setOpen(newOpen)
   }
 
-  const scrollToSection = (sectionId: string) => {
-    const sectionElement = document.getElementById(sectionId)
-    const offset = 128
-    if (sectionElement) {
-      const targetScroll = sectionElement.offsetTop - offset
-      sectionElement.scrollIntoView({ behavior: 'smooth' })
-      window.scrollTo({
-        top: targetScroll,
-        behavior: 'smooth',
-      })
-      setOpen(false)
-    }
-  }
+  // const scrollToSection = (sectionId: string) => {
+  //   const sectionElement = document.getElementById(sectionId)
+  //   const offset = 128
+  //   if (sectionElement) {
+  //     const targetScroll = sectionElement.offsetTop - offset
+  //     sectionElement.scrollIntoView({ behavior: 'smooth' })
+  //     window.scrollTo({
+  //       top: targetScroll,
+  //       behavior: 'smooth',
+  //     })
+  //     setOpen(false)
+  //   }
+  // }
 
   return (
     <AppBar

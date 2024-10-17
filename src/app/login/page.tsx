@@ -11,12 +11,11 @@ import Box from '@mui/material/Box'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
 import { useRouter } from 'next/navigation'
-import { LoginResponse } from '@/types'
 import { Container } from '@/components'
 
 const Login = () => {
   const router = useRouter()
-  let login: any // TODO
+  // let login: any // TODO
   const [submit, setSubmit] = useState(false)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -36,8 +35,9 @@ const Login = () => {
         const json = await res.json()
         if (!res.ok) throw new Error(json.message)
 
-        const data = json as LoginResponse
-        login(data.access_token, data.data)
+        // TODO: Remove comment
+        // const data = json as LoginResponse
+        // login(data.access_token, data.data)
 
         return router.push('/')
       })
