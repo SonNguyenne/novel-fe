@@ -24,6 +24,7 @@ import { ProductGrid } from '@/components/grids'
 import Grid from '@mui/material/Grid2'
 import Link from 'next/link'
 import { Container } from '@/components'
+import { Swiper } from '@/components/swiper'
 
 export default function Home() {
   const router = useRouter()
@@ -56,7 +57,10 @@ export default function Home() {
           <Paper elevation={6} sx={{ borderRadius: 2 }}>
             <Box sx={{ p: 2 }}>
               <Typography variant="h4">🔥 Hot</Typography>
-              <ProductGrid products={products} loading={loading} limit={6} />
+            </Box>
+
+            <Box sx={{ p: 2 }}>
+              <Swiper items={products.slice(0, 10)} loading={loading} />
             </Box>
           </Paper>
         </Grid>
@@ -69,16 +73,16 @@ export default function Home() {
 
             <Box sx={{ overflowY: 'auto' }}>
               {loading ? (
-                <Stack spacing={2} sx={{ height: '360px', p: 2 }}>
+                <Stack spacing={2} sx={{ height: '360px', px: 2 }}>
                   {Array.from({ length: 10 }).map((_, i) => (
-                    <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
+                    <Stack key={i} direction="row" spacing={1} sx={{ alignItems: 'center' }}>
                       <Skeleton variant="text" width="50px" height="20px" />
                       <Skeleton variant="text" width="100%" height="20px" />
                     </Stack>
                   ))}
                 </Stack>
               ) : (
-                <Stack spacing={2} sx={{ height: '360px', p: 2 }}>
+                <Stack spacing={2} sx={{ height: '360px', px: 2 }}>
                   <Stack role="button" direction="row" spacing={1} sx={{ alignItems: 'center' }}>
                     <Chip label={'20/10'} color="info" size="small" sx={{ width: '50px' }} />
                     <Typography color="textSecondary">Tuyển dụng Dịch giả/Editor </Typography>
@@ -207,13 +211,8 @@ export default function Home() {
                         ))
                       : products
                           .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime())
-                          .map((prod, index) => (
-                            <TableRow
-                              hover
-                              key={index}
-                              onClick={() => router.push(`/product/${prod.id}`)}
-                              role="button"
-                            >
+                          .map((prod, i) => (
+                            <TableRow hover key={i} onClick={() => router.push(`/product/${prod.id}`)} role="button">
                               <TableCell>{prod.name}</TableCell>
                               <TableCell>
                                 <Chip label={prod.chapterCount} color="info" />

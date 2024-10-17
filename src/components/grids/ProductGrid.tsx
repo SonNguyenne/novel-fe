@@ -18,15 +18,32 @@ export const ProductGrid = ({ products, limit = 12, loading, showInfo = false }:
     <Box className="mt-4 grid grid-cols-3 min-[900px]:grid-cols-4 min-[1200px]:grid-cols-6 gap-1 sm:gap-2">
       {!products || loading
         ? Array.from({ length: limit }).map((_, i) => (
-            <Box key={i} className="h-[180px] min-[600px]:h-[270px] min-[1200px]:h-[360px]">
+            <Box
+              key={i}
+              sx={{
+                height: {
+                  xs: 180,
+                  md: 270,
+                  xl: 360,
+                },
+              }}
+            >
               <Skeleton variant="rounded" width="100%" height="100%" />
             </Box>
           ))
         : products.slice(0, limit).map(prod => {
             return (
-              <Box key={prod.id} className="overflow-hidden">
+              <Box key={prod.id} sx={{ overflow: 'hidden' }}>
                 <Link href={`/product/${prod.id}`} className="relative group">
-                  <Box className="h-[180px] min-[600px]:h-[270px] min-[1200px]:h-[360px] ">
+                  <Box
+                    sx={{
+                      height: {
+                        xs: 180,
+                        md: 270,
+                        xl: 360,
+                      },
+                    }}
+                  >
                     <Image
                       className={cn(
                         'object-cover w-full h-full object-center',
