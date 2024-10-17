@@ -117,8 +117,8 @@ export const Header: React.FC<HeaderProps> = ({ token, logout }) => {
               </Box>
             </Link>
             <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-              {pages.map(page => (
-                <Link href={page.href}>
+              {pages.map((page, i) => (
+                <Link href={page.href} key={i}>
                   <Button variant="text" color="primary" size="large">
                     {page.name}
                   </Button>
@@ -185,8 +185,10 @@ export const Header: React.FC<HeaderProps> = ({ token, logout }) => {
                   flexGrow: 1,
                 }}
               >
-                {pages.map(page => (
-                  <MenuItem onClick={() => router.push(page.href)}>{page.name}</MenuItem>
+                {pages.map((page, i) => (
+                  <MenuItem key={i} onClick={() => router.push(page.href)}>
+                    {page.name}
+                  </MenuItem>
                 ))}
                 <Divider />
                 {!token ? (
