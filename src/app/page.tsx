@@ -71,9 +71,19 @@ export default function Home() {
               <Typography variant="h4">Tin tức</Typography>
             </Box>
 
-            <Box sx={{ overflowY: 'auto' }}>
+            <Box
+              sx={{
+                overflowY: 'auto',
+                height: {
+                  xs: 180,
+                  md: 620,
+                  lg: 270,
+                  xl: 360,
+                },
+              }}
+            >
               {loading ? (
-                <Stack spacing={2} sx={{ height: '360px', px: 2 }}>
+                <Stack spacing={2} sx={{ p: 2 }}>
                   {Array.from({ length: 10 }).map((_, i) => (
                     <Stack key={i} direction="row" spacing={1} sx={{ alignItems: 'center' }}>
                       <Skeleton variant="text" width="50px" height="20px" />
@@ -82,7 +92,7 @@ export default function Home() {
                   ))}
                 </Stack>
               ) : (
-                <Stack spacing={2} sx={{ height: '360px', px: 2 }}>
+                <Stack spacing={2} sx={{ p: 2 }}>
                   <Stack role="button" direction="row" spacing={1} sx={{ alignItems: 'center' }}>
                     <Chip label={'20/10'} color="info" size="small" sx={{ width: '50px' }} />
                     <Typography color="textSecondary">Tuyển dụng Dịch giả/Editor </Typography>
@@ -165,7 +175,7 @@ export default function Home() {
                     ))
                   : categories.map(cate => {
                       return (
-                        <Grid size={6} key={cate.id}>
+                        <Grid size={{ xs: 6, sm: 4, lg: 6 }} key={cate.id}>
                           <Link
                             className="hover:underline underline-offset-4"
                             href={`/category/${cate.id}`}
