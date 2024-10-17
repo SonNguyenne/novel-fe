@@ -31,12 +31,6 @@ const pages = [
   { name: 'Phân loại', href: '/' },
 ]
 
-// export const Header = () => {
-// TODO
-// let token: any = true
-// let logout: any
-// }
-
 export const Header: React.FC<HeaderProps> = ({ token, logout }) => {
   const router = useRouter()
   const [open, setOpen] = React.useState(false)
@@ -44,19 +38,19 @@ export const Header: React.FC<HeaderProps> = ({ token, logout }) => {
     setOpen(newOpen)
   }
 
-  const scrollToSection = (sectionId: string) => {
-    const sectionElement = document.getElementById(sectionId)
-    const offset = 128
-    if (sectionElement) {
-      const targetScroll = sectionElement.offsetTop - offset
-      sectionElement.scrollIntoView({ behavior: 'smooth' })
-      window.scrollTo({
-        top: targetScroll,
-        behavior: 'smooth',
-      })
-      setOpen(false)
-    }
-  }
+  // const scrollToSection = (sectionId: string) => {
+  //   const sectionElement = document.getElementById(sectionId)
+  //   const offset = 128
+  //   if (sectionElement) {
+  //     const targetScroll = sectionElement.offsetTop - offset
+  //     sectionElement.scrollIntoView({ behavior: 'smooth' })
+  //     window.scrollTo({
+  //       top: targetScroll,
+  //       behavior: 'smooth',
+  //     })
+  //     setOpen(false)
+  //   }
+  // }
 
   return (
     <AppBar
