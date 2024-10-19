@@ -18,7 +18,7 @@ import TablePaginationActions from '@mui/material/TablePagination/TablePaginatio
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Rating from '@mui/material/Rating'
-import { IChapter, IProduct, IRate, PRODUCT_STATUS } from '@/types'
+import { IChapter, IProduct, PRODUCT_STATUS } from '@/types'
 import { formatCurrency, formatDatetime } from '@/lib/utils'
 import { ProductGrid } from '@/components/grids'
 import Image from 'next/image'
@@ -30,8 +30,6 @@ export default function ProductDetail({ id, products, product, chapters, rates, 
   const [flag, setFlag] = useState(false)
   const [page, setPage] = React.useState(0)
   const [rowsPerPage, setChaptersPerPage] = React.useState(5)
-  // const [openPopup, setOpenPopup] = useState(false)
-  // const [chapter, setChapter] = useState<IChapter>()
   const [relatedProduct, setRelatedProduct] = useState<IProduct[]>([])
 
   const handleChapterClick = (chap: IChapter) => {
@@ -46,10 +44,6 @@ export default function ProductDetail({ id, products, product, chapters, rates, 
     //   router.push(`/products/${params?.id}/chapters/${chap.chapterNumber}`)
     // }
   }
-
-  // const handleClosePopup = () => {
-  //   setOpenPopup(false)
-  // }
   useEffect(() => {
     if (products) {
       setRelatedProduct(products.filter(prod => prod.id !== +id))
@@ -236,7 +230,9 @@ export default function ProductDetail({ id, products, product, chapters, rates, 
         <Box component={'section'} className="relative mt-20">
           <Typography variant="h5">Truyện liên quan</Typography>
 
-          <ProductGrid products={relatedProduct} limit={6} />
+          <Box sx={{ py: 2 }}>
+            <ProductGrid products={relatedProduct} limit={6} />
+          </Box>
         </Box>
       )}
       {/* <StripePaymentForm

@@ -47,7 +47,7 @@ export interface IRate {
   updatedAt: string
 }
 
-export interface User {
+export interface IUser {
   id: number
   name: string
   email: string
@@ -62,7 +62,7 @@ export interface User {
 
 export interface LoginResponse {
   access_token: string
-  data: User
+  data: IUser
 }
 
 export interface LoginRequest {
@@ -72,9 +72,17 @@ export interface LoginRequest {
 
 export interface SessionLogin {
   accessToken?: string
-  user?: User
+  user?: IUser
 }
 
 export interface UserRole {
   role: 'ADMIN' | 'MANAGER' | string // Define other fields as needed
+}
+
+export interface ITextStyle {
+  fontFamily?: string
+  fontWeight: number
+  fontSize: number
+  lineHeight: number
+  letterSpacing: number
 }

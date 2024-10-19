@@ -1,9 +1,10 @@
 'use client'
 
-import React from 'react'
-import { Box, Container, Typography } from '@mui/material'
-import { IChapter } from '@/types'
-import { ChapterActionButton } from '@/components'
+import React, { useEffect, useState } from 'react'
+import { Box, Skeleton, Typography } from '@mui/material'
+import { IChapter, ITextStyle } from '@/types'
+import { ChapterActionButton, Container } from '@/components'
+import { getRandomWidth } from '@/lib'
 
 interface IPageParams {
   chapters: IChapter[]
@@ -11,61 +12,88 @@ interface IPageParams {
 }
 
 export const Chapter = ({ chapter, chapters }: IPageParams) => {
-  //   const [chapter, setChapter] = useState<IChapter>()
-  //   const [chapters, setChapters] = useState<IChapter[]>([])
+  const [loading, setLoading] = useState(true)
+  const [textStyle, setTextStyle] = useState<ITextStyle>({
+    fontFamily: '',
+    fontWeight: 400,
+    fontSize: 1,
+    lineHeight: 2.5,
+    letterSpacing: 0,
+  })
 
-  //   useEffect(() => {
-  //     const fetchApi = async () => {
-  //       await Promise.all([fetch(`/api/product/${id}/chapter`), fetch(`/api/product/${id}/chapter/${chapterNumber}`)])
-  //         .then(async ([chaptersResp, chapterResp]) => {
-  //           return {
-  //             chapters: (await chaptersResp.json()) as IChapter[],
-  //             chapter: (await chapterResp.json()) as IChapter,
-  //           }
-  //         })
-  //         .then(({ chapters, chapter }) => {
-  //           setChapters(chapters)
-  //           setChapter(chapter)
-  //         })
-  //     }
+  const handleChangeTextStyle = (state: Partial<ITextStyle>) => {
+    setTextStyle(prevStyle => {
+      const updatedStyle = { ...prevStyle, ...state }
+      localStorage.setItem('textStyle', JSON.stringify(updatedStyle))
+      return updatedStyle
+    })
+  }
 
-  //     fetchApi()
-  //   }, [chapterNumber, id])
+  useEffect(() => {
+    const savedStyle = localStorage.getItem('textStyle')
+    if (savedStyle) setTextStyle(JSON.parse(savedStyle))
+  }, [])
 
-  // useEffect(() => {
-  //   const incrementViewCount = async () => {
-  //     // TODO: Cant send
-  //     await fetch(`/api/product/${id}/view`, { method: 'POST' })
-  //   }
-
-  //   incrementViewCount()
-  // }, [id])
-
-  if (!chapter) return
+  useEffect(() => {
+    if (chapters.length > 0 && chapter) {
+      setLoading(false)
+    }
+  }, [chapters, chapter])
 
   return (
     <Container sx={{ position: 'relative' }}>
       <Box className="flex flex-col justify-center">
-        <Typography variant="h4" className="font-bold text-center">
-          Chap {chapter.chapterNumber} - {chapter.chapterName}
-        </Typography>
+        {!chapter || loading ? (
+          <Skeleton variant="text" sx={{ display: 'flex', alignSelf: 'center', fontSize: '28px' }} width="300px" />
+        ) : (
+          <Typography variant="h4" className="font-bold text-center">
+            Chap {chapter.chapterNumber} - {chapter.chapterName}
+          </Typography>
+        )}
 
-        <ChapterActionButton
-          className="mt-6 hidden md:flex justify-center gap-2 sticky top-[90px]"
-          chapter={chapter}
-          count={chapters.length}
-        />
-
-        <Box>
-          <Typography
-            variant="body1"
-            className="py-5 leading-10 tracking-wider"
-            dangerouslySetInnerHTML={{ __html: chapter.content }}
+        {chapter && (
+          <ChapterActionButton
+            textStyle={textStyle}
+            handleChangeTextStyle={handleChangeTextStyle}
+            className="mt-6 hidden md:flex justify-center gap-2 sticky top-[90px]"
+            chapter={chapter}
+            count={chapters.length}
           />
-        </Box>
+        )}
+
+        {!chapter || loading ? (
+          <Box>
+            {Array.from({ length: 40 }).map((_, index) => (
+              <Skeleton key={index} sx={{ my: 2 }} variant="text" width={getRandomWidth()} height="20px" />
+            ))}
+          </Box>
+        ) : (
+          <Box sx={{ py: 3 }}>
+            <Typography
+              variant="body1"
+              sx={{
+                textAlign: 'justify',
+                fontFamily: textStyle.fontFamily,
+                fontWeight: textStyle.fontWeight,
+                fontSize: textStyle.fontSize + 'em',
+                lineHeight: textStyle.lineHeight + 'em',
+                letterSpacing: textStyle.letterSpacing + 'em',
+              }}
+              dangerouslySetInnerHTML={{ __html: chapter.content }}
+            />
+          </Box>
+        )}
       </Box>
 
-      <ChapterActionButton chapter={chapter} count={chapters.length} className="gap-2 " />
+      {chapter && (
+        <ChapterActionButton
+          textStyle={textStyle}
+          handleChangeTextStyle={handleChangeTextStyle}
+          chapter={chapter}
+          count={chapters.length}
+          className="gap-2 "
+        />
+      )}
     </Container>
   )
 }
