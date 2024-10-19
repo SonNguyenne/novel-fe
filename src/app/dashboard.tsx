@@ -2,9 +2,7 @@
 
 import {
   Box,
-  Button,
   Chip,
-  Divider,
   Paper,
   Skeleton,
   Stack,
@@ -17,14 +15,15 @@ import {
   Typography,
 } from '@mui/material'
 import { useRouter } from 'next/navigation'
-import { use, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import React from 'react'
 import { _handleReponse, formatTimeAgo } from '@/lib/utils'
 import { ProductGrid } from '@/components/grids'
 import Grid from '@mui/material/Grid2'
 import Link from 'next/link'
-import { Container } from '@/components'
 import { DashboardProps } from '@/types'
+import { CardPaper, Container } from '@/components'
+import { Swiper } from '@/components/swiper'
 
 export default function Dashboard({ products, categories, doneProducts }: DashboardProps) {
   const router = useRouter()
@@ -36,37 +35,42 @@ export default function Dashboard({ products, categories, doneProducts }: Dashbo
     }
   }, [products, categories, doneProducts])
 
-  if (loading) return 'Loading...'
   return (
     <Container>
       <Grid container spacing={2}>
         <Grid size={{ xs: 12, lg: 9 }}>
-          <Paper elevation={6} sx={{ borderRadius: 2 }}>
+          <CardPaper title="🔥 Hot">
             <Box sx={{ p: 2 }}>
-              <Typography variant="h4">🔥 Hot</Typography>
-              <ProductGrid products={products} loading={loading} limit={6} />
+              <Swiper items={products.slice(0, 10)} loading={loading} />
             </Box>
-          </Paper>
+          </CardPaper>
         </Grid>
 
         <Grid size={{ xs: 12, md: 6, lg: 3 }}>
-          <Paper elevation={6} sx={{ borderRadius: 2, height: '100%' }}>
-            <Box sx={{ p: 2 }}>
-              <Typography variant="h4">Tin tức</Typography>
-            </Box>
-
-            <Box sx={{ overflowY: 'auto' }}>
+          <CardPaper title="Tin tức" sx={{ height: '100%' }}>
+            <Box
+              sx={{
+                overflowY: 'auto',
+                height: {
+                  xs: 180,
+                  md: 620,
+                  lg: 300,
+                  xl: 390,
+                },
+                p: 2,
+              }}
+            >
               {loading ? (
-                <Stack spacing={2} sx={{ height: '360px', p: 2 }}>
+                <Stack spacing={2}>
                   {Array.from({ length: 10 }).map((_, i) => (
-                    <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
+                    <Stack key={i} direction="row" spacing={1} sx={{ alignItems: 'center' }}>
                       <Skeleton variant="text" width="50px" height="20px" />
                       <Skeleton variant="text" width="100%" height="20px" />
                     </Stack>
                   ))}
                 </Stack>
               ) : (
-                <Stack spacing={2} sx={{ height: '360px', p: 2 }}>
+                <Stack spacing={2}>
                   <Stack role="button" direction="row" spacing={1} sx={{ alignItems: 'center' }}>
                     <Chip label={'20/10'} color="info" size="small" sx={{ width: '50px' }} />
                     <Typography color="textSecondary">Tuyển dụng Dịch giả/Editor </Typography>
@@ -130,17 +134,13 @@ export default function Dashboard({ products, categories, doneProducts }: Dashbo
                 </Stack>
               )}
             </Box>
-          </Paper>
+          </CardPaper>
         </Grid>
 
         <Grid size={{ xs: 12, md: 6, lg: 3 }}>
-          <Paper elevation={6} sx={{ borderRadius: 2 }}>
-            <Box sx={{ p: 2 }}>
-              <Typography variant="h4">Thế loại</Typography>
-            </Box>
-
+          <CardPaper title="Thể loại">
             <Box sx={{ overflowY: 'auto', p: 2 }}>
-              <Grid container spacing={1} sx={{ height: 620 }}>
+              <Grid container spacing={1} sx={{ height: { xs: 300, sm: 620 } }}>
                 {!categories || loading
                   ? Array.from({ length: 20 }).map((_, i) => (
                       <Grid size={6} key={i}>
@@ -149,7 +149,7 @@ export default function Dashboard({ products, categories, doneProducts }: Dashbo
                     ))
                   : categories.map(cate => {
                       return (
-                        <Grid size={6} key={cate.id}>
+                        <Grid size={{ xs: 6, sm: 4, lg: 6 }} key={cate.id}>
                           <Link
                             className="hover:underline underline-offset-4"
                             href={`/category/${cate.id}`}
@@ -162,15 +162,11 @@ export default function Dashboard({ products, categories, doneProducts }: Dashbo
                     })}
               </Grid>
             </Box>
-          </Paper>
+          </CardPaper>
         </Grid>
 
         <Grid size={{ xs: 12, lg: 9 }}>
-          <Paper elevation={6} sx={{ borderRadius: 2 }}>
-            <Box sx={{ p: 2 }}>
-              <Typography variant="h4">Chương mới</Typography>
-            </Box>
-
+          <CardPaper title="Chương mới">
             <Paper sx={{ width: '100%', overflow: 'hidden' }}>
               <TableContainer component={Paper} sx={{ height: 620 + 16 + 16 }}>
                 <Table aria-label="sticky table" stickyHeader>
@@ -195,13 +191,8 @@ export default function Dashboard({ products, categories, doneProducts }: Dashbo
                         ))
                       : products
                           .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime())
-                          .map((prod, index) => (
-                            <TableRow
-                              hover
-                              key={index}
-                              onClick={() => router.push(`/product/${prod.id}`)}
-                              role="button"
-                            >
+                          .map((prod, i) => (
+                            <TableRow hover key={i} onClick={() => router.push(`/product/${prod.id}`)} role="button">
                               <TableCell>{prod.name}</TableCell>
                               <TableCell>
                                 <Chip label={prod.chapterCount} color="info" />
@@ -214,16 +205,15 @@ export default function Dashboard({ products, categories, doneProducts }: Dashbo
                 </Table>
               </TableContainer>
             </Paper>
-          </Paper>
+          </CardPaper>
         </Grid>
 
         <Grid size={12}>
-          <Paper elevation={6} sx={{ borderRadius: 2 }}>
+          <CardPaper title="Truyện đã hoàn thành">
             <Box sx={{ p: 2 }}>
-              <Typography variant="h4">Truyện đã hoàn thành</Typography>
               <ProductGrid products={doneProducts} loading={loading} limit={6} showInfo />
             </Box>
-          </Paper>
+          </CardPaper>
         </Grid>
       </Grid>
     </Container>
