@@ -78,3 +78,18 @@ export interface SessionLogin {
 export interface UserRole {
   role: 'ADMIN' | 'MANAGER' | string // Define other fields as needed
 }
+
+export interface DashboardProps {
+  products: IProduct[]
+  categories: ICategory[]
+  doneProducts: IProduct[]
+}
+
+export interface ProductDetailProps {
+  id: string
+  products: IProduct[]
+  product: IProduct
+  chapters: IChapter[]
+  rates: IRate[]
+  user: User
+}

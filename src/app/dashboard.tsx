@@ -24,11 +24,11 @@ import { ProductGrid } from '@/components/grids'
 import Grid from '@mui/material/Grid2'
 import Link from 'next/link'
 import { Container } from '@/components'
+import { DashboardProps } from '@/types'
 
-export default function Dashboard({ products, categories, doneProducts }: any) {
+export default function Dashboard({ products, categories, doneProducts }: DashboardProps) {
   const router = useRouter()
   const [loading, setLoading] = useState(true)
-  const [color, setColor] = useState('#fff')
 
   useEffect(() => {
     if (products.length > 0 && categories.length > 0) {

@@ -4,10 +4,15 @@ import { NextRequest, NextResponse } from 'next/server'
 export async function POST(request: NextRequest) {
   const { email, password } = await request.json()
 
-  return await signIn('credentials', {
+  const logined = await signIn('credentials', {
     email,
     password,
+    redirect: false, // Đảm bảo không tự động redirect khi đăng nhập
   })
-    .then(resp => NextResponse.json(resp, { status: 200 }))
-    .catch(err => NextResponse.json(err, { status: err.statusCode }))
+
+  if (logined?.error) {
+    return NextResponse.json({ error: logined.error }, { status: 401 })
+  }
+
+  return NextResponse.json({ message: 'Login successful' }, { status: 200 })
 }

@@ -18,13 +18,13 @@ import TablePaginationActions from '@mui/material/TablePagination/TablePaginatio
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Rating from '@mui/material/Rating'
-import { IChapter, IProduct, IRate, PRODUCT_STATUS } from '@/types'
+import { IChapter, IProduct, IRate, PRODUCT_STATUS, ProductDetailProps } from '@/types'
 import { formatCurrency, formatDatetime } from '@/lib/utils'
 import { ProductGrid } from '@/components/grids'
 import Image from 'next/image'
 import { Container } from '@/components'
 
-export default function ProductDetail({ id, products, product, chapters, rates, user }: any) {
+export default function ProductDetail({ id, products, product, chapters, rates, user }: ProductDetailProps) {
   const router = useRouter()
 
   const [flag, setFlag] = useState(false)

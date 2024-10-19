@@ -24,17 +24,15 @@ const Login = () => {
 
     if (!email || !password) return
 
-    return await fetch('api/auth/login', {
+    const user = await fetch('api/auth/login', {
       method: 'POST',
       body: JSON.stringify({ email, password }),
     })
-      .then(async res => {
-        window.location.href = '/'
-      })
-      .catch(err => {
-        console.error(err)
-        return setErrorText(err.message)
-      })
+    if (user.status !== 200) {
+      setErrorText('Sai tài khoản hoặc mật khẩu')
+    } else {
+      window.location.href = '/'
+    }
   }
 
   return (
