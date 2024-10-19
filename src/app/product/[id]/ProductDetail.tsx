@@ -96,8 +96,8 @@ export default function ProductDetail({ id, products, product, chapters, rates, 
 
   return (
     <Container>
-      <Box component={'section'} className="grid lg:grid-cols-7 gap-8 place-items-center md:place-items-start">
-        <Box className="book-3d relative h-60 w-40 md:h-[600px] md:w-[400px] lg:col-span-2">
+      <Box component={'section'} className="grid lg:grid-cols-7 gap-8 place-items-center lg:place-items-start">
+        <Box className="book-3d relative h-60 w-40 md:h-[480px] md:w-[320px] lg:h-full lg:w-full lg:col-span-2">
           <Image
             className="object-cover w-full h-full object-center rounded"
             src={product.image}
@@ -209,7 +209,7 @@ export default function ProductDetail({ id, products, product, chapters, rates, 
             <TableFooter>
               <TableRow>
                 <TablePagination
-                  rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+                  rowsPerPageOptions={[5, 10, 25, { label: 'Tất cả', value: -1 }]}
                   count={chapters.length}
                   rowsPerPage={rowsPerPage}
                   page={page}
@@ -224,6 +224,7 @@ export default function ProductDetail({ id, products, product, chapters, rates, 
                   onPageChange={handleChangePage}
                   onRowsPerPageChange={handleChangeRowsPerPage}
                   ActionsComponent={TablePaginationActions}
+                  labelRowsPerPage="Số hàng"
                 />
               </TableRow>
             </TableFooter>
@@ -238,6 +239,11 @@ export default function ProductDetail({ id, products, product, chapters, rates, 
           <ProductGrid products={relatedProduct} limit={6} />
         </Box>
       )}
+      {/* <StripePaymentForm
+          open={openPopup}
+          handleClose={handleClosePopup}
+          chapter={chapter}
+        /> */}
     </Container>
   )
 }

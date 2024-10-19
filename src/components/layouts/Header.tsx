@@ -62,7 +62,7 @@ export const Header: React.FC<HeaderProps> = ({ token, logout }) => {
         mt: 2,
       }}
     >
-      <Container>
+      <Container maxWidth="lg">
         <Toolbar
           variant="regular"
           sx={theme => ({

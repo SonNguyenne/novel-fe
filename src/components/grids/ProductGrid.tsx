@@ -15,7 +15,7 @@ export interface IProductGrid {
 
 export const ProductGrid = ({ products, limit = 12, loading, showInfo = false }: IProductGrid) => {
   return (
-    <Box className="mt-4 grid grid-cols-3 min-[900px]:grid-cols-4 min-[1200px]:grid-cols-6 gap-1 sm:gap-2">
+    <Box className="grid grid-cols-3 min-[900px]:grid-cols-4 min-[1200px]:grid-cols-6 gap-1 sm:gap-2">
       {!products || loading
         ? Array.from({ length: limit }).map((_, i) => (
             <Box

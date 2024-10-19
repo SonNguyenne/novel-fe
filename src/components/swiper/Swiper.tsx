@@ -37,11 +37,11 @@ export const Swiper: FC<ISwiperProps> = ({ items, loading, slidesPerView = 5 }) 
       // slidesPerView={slidesPerView}
       loop
       autoplay={{
-        delay: 3500,
+        delay: 2500,
         disableOnInteraction: false,
         pauseOnMouseEnter: true,
       }}
-      pagination={{ clickable: !loading }}
+      pagination={{ clickable: true }}
     >
       {!items || loading
         ? Array.from({ length: slidesPerView }).map((_, i) => (
@@ -61,7 +61,7 @@ export const Swiper: FC<ISwiperProps> = ({ items, loading, slidesPerView = 5 }) 
           ))
         : items.map((item: IProduct) => (
             <SwiperSlide key={item.id}>
-              <Link href={`/product/${item.id}`} className="relative group">
+              <Link href={`/product/${item.id}`} className="relative group overflow-hidden">
                 <Box
                   sx={{
                     height: {

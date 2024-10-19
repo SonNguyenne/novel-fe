@@ -1,6 +1,5 @@
 'use client'
 
-import { useEffect, useState } from 'react'
 import React from 'react'
 import { Box, Container, Typography } from '@mui/material'
 import { IChapter } from '@/types'
@@ -45,14 +44,14 @@ export const Chapter = ({ chapter, chapters }: IPageParams) => {
   if (!chapter) return
 
   return (
-    <Container maxWidth="xl" sx={{ position: 'relative' }}>
+    <Container sx={{ position: 'relative' }}>
       <Box className="flex flex-col justify-center">
         <Typography variant="h4" className="font-bold text-center">
           Chap {chapter.chapterNumber} - {chapter.chapterName}
         </Typography>
 
         <ChapterActionButton
-          className="mt-6 hidden lg:flex justify-center gap-2 sticky top-[90px]"
+          className="mt-6 hidden md:flex justify-center gap-2 sticky top-[90px]"
           chapter={chapter}
           count={chapters.length}
         />

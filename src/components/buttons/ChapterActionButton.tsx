@@ -26,7 +26,7 @@ export const ChapterActionButton: FC<IChapterActionButton> = ({ chapter, count, 
   }
 
   return (
-    <Box className={cn('w-full flex lg:hidden justify-between sticky bottom-[10px]', className)}>
+    <Box className={cn('w-full flex md:hidden justify-between sticky bottom-[10px]', className)}>
       <Button
         variant="contained"
         startIcon={<ArrowBack />}
@@ -37,7 +37,7 @@ export const ChapterActionButton: FC<IChapterActionButton> = ({ chapter, count, 
         Tập {chapter.chapterNumber - 1}
       </Button>
 
-      <Button variant="outlined" startIcon={<SettingsIcon />} className="backdrop-blur-sm">
+      <Button variant="contained" color="secondary" startIcon={<SettingsIcon />} className="backdrop-blur-sm">
         Cài đặt
       </Button>
 
