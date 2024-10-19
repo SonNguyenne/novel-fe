@@ -155,6 +155,9 @@ export const Header: React.FC<HeaderProps> = ({ token, logout }) => {
                     <PersonIcon />
                   </IconButton>
                 </Tooltip>
+                <Button color="primary" variant="text" size="medium" onClick={() => logout && logout()}>
+                  Thoát
+                </Button>
               </>
             )}
           </Box>

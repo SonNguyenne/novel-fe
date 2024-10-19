@@ -1,6 +1,7 @@
 import NextAuth, { User } from 'next-auth'
 import { AdapterUser } from 'next-auth/adapters'
 import Credentials from 'next-auth/providers/credentials'
+import { IUser } from './types'
 
 declare module 'next-auth' {
   interface User {
@@ -9,7 +10,7 @@ declare module 'next-auth' {
 
   interface Session {
     accessToken?: string
-    user: User
+    user: IUser
   }
 }
 
@@ -26,7 +27,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
     async session({ session, token }) {
       session.accessToken = token.access_token as string
-      session.user = token.user as AdapterUser & User
+      session.user = token.user as AdapterUser & IUser
       return session
     },
     async redirect({ url, baseUrl }) {

@@ -49,15 +49,16 @@ export interface IRate {
 
 export interface IUser {
   id: number
-  name: string
-  email: string
-  phone: string | null
-  birthdate: string | null
-  picture: string | null
-  money: number
-  refreshToken: string | null
-  emailVerified: boolean
-  createdAt: string
+  name?: string
+  email?: string
+  phone?: string | null
+  birthdate?: string | null
+  picture?: string | null
+  money?: number
+  refreshToken?: string | null
+  emailVerified?: boolean
+  createdAt?: string
+  access_token?: string
 }
 
 export interface LoginResponse {
@@ -86,12 +87,12 @@ export interface DashboardProps {
 }
 
 export interface ProductDetailProps {
-  id: string
+  id: number
   products: IProduct[]
   product: IProduct
   chapters: IChapter[]
   rates: IRate[]
-  user: IUser
+  user?: IUser
 }
 export interface ITextStyle {
   fontFamily?: string
