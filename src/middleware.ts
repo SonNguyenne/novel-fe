@@ -25,6 +25,6 @@ export default auth((req: NextRequest) => {
 })
 
 export const config = {
-  // matcher: ['/:path*', '/dashboard/:path*'],
-  matcher: ['/admin((?!api|error|_next/static|_next/image|favicon.ico).*)'],
+  matcher: ['/admin/:path*', '/dashboard/:path*'],
+  // matcher: ['/admin((?!api|error|_next/static|_next/image|favicon.ico).*)'],
 }

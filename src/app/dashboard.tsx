@@ -36,26 +36,12 @@ export default function Dashboard({ products, categories, doneProducts }: any) {
     }
   }, [products, categories, doneProducts])
 
+  if (loading) return 'Loading...'
   return (
     <Container>
       <Stack spacing={10}>
         <Box className="md:mt-6">
           <Typography variant="h4">Truyện Hot</Typography>
-          <Button variant="contained" sx={{ mt: 3, mb: 2 }} onClick={() => setColor('red')}>
-            đổi màu đỏ
-          </Button>
-          <Button variant="contained" sx={{ mt: 3, mb: 2 }} onClick={() => setColor('blue')}>
-            đổi màu xanh
-          </Button>
-          <div
-            style={{
-              width: 600,
-              height: 300,
-              backgroundColor: color,
-            }}
-          >
-            màu
-          </div>
           <ProductGrid products={products} loading={loading} />
         </Box>
 
