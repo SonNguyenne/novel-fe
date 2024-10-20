@@ -5,6 +5,7 @@ import { Box, Skeleton, Typography } from '@mui/material'
 import { IChapter, ITextStyle } from '@/types'
 import { ChapterActionButton, Container } from '@/components'
 import { getRandomWidth } from '@/lib'
+import { useBlockCopy } from '@/hooks/useBlockCopy'
 
 interface IPageParams {
   chapters: IChapter[]
@@ -39,6 +40,8 @@ export const Chapter = ({ chapter, chapters }: IPageParams) => {
       setLoading(false)
     }
   }, [chapters, chapter])
+
+  useBlockCopy()
 
   return (
     <Container sx={{ position: 'relative' }}>
@@ -78,6 +81,8 @@ export const Chapter = ({ chapter, chapters }: IPageParams) => {
                 fontSize: textStyle.fontSize + 'em',
                 lineHeight: textStyle.lineHeight + 'em',
                 letterSpacing: textStyle.letterSpacing + 'em',
+                userSelect: 'none',
+                pointerEvents: 'none',
               }}
               dangerouslySetInnerHTML={{ __html: chapter.content }}
             />

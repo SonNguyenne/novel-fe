@@ -25,7 +25,6 @@ interface HeaderProps {
 }
 
 const pages = [
-  { name: 'Trang chủ', href: '/' },
   { name: 'Danh sách', href: '/' },
   { name: 'Thể loại', href: '/' },
   { name: 'Phân loại', href: '/' },
@@ -106,7 +105,7 @@ export const Header: React.FC<HeaderProps> = ({ token, logout }) => {
                   variant="h5"
                   sx={{ fontWeight: 'bold', display: { xs: 'none', md: 'block' } }}
                 >
-                  ReadOrDead
+                  AiTruyen
                 </Typography>
               </Box>
             </Link>

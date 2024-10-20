@@ -4,6 +4,7 @@ import React, { FC } from 'react'
 import { IChapter, ITextStyle } from '@/types'
 import { ArrowBack, ArrowForward } from '@mui/icons-material'
 import {
+  Autocomplete,
   Box,
   Button,
   ButtonGroup,
@@ -11,9 +12,8 @@ import {
   FormGroup,
   FormLabel,
   Popover,
+  TextField,
   Theme,
-  ToggleButton,
-  ToggleButtonGroup,
   useMediaQuery,
 } from '@mui/material'
 import SettingsIcon from '@mui/icons-material/Settings'
@@ -27,6 +27,16 @@ export interface IChapterActionButton {
   textStyle: ITextStyle
   handleChangeTextStyle: (state: Partial<ITextStyle>) => void
 }
+
+const fontOptions = [
+  { label: 'Arial', fontFamily: 'Arial, sans-serif' },
+  { label: 'Times New Roman', fontFamily: '"Times New Roman", serif' },
+  { label: 'Georgia', fontFamily: 'Georgia, serif' },
+  { label: 'Verdana', fontFamily: 'Verdana, sans-serif' },
+  { label: 'Roboto', fontFamily: 'Roboto, sans-serif' },
+  { label: 'Open Sans', fontFamily: 'Open Sans, sans-serif' },
+  { label: 'Merriweather', fontFamily: 'Merriweather, serif' },
+]
 
 export const ChapterActionButton: FC<IChapterActionButton> = ({
   chapter,
@@ -84,12 +94,31 @@ export const ChapterActionButton: FC<IChapterActionButton> = ({
         }}
       >
         <Box sx={{ p: 2, display: 'flex', flexDirection: 'column', gap: 2 }}>
-          {/* TODO: Combobox for font family */}
+          <FormControl>
+            <FormLabel>Font chữ</FormLabel>
+            <FormGroup sx={{ pt: 1 }}>
+              <Autocomplete
+                disablePortal
+                options={fontOptions}
+                getOptionLabel={option => option.label}
+                renderInput={params => <TextField {...params} label={textStyle.fontFamily?.split(',')[0]} />}
+                renderOption={(props, option) => (
+                  <Box component="li" {...props} sx={{ fontFamily: option.fontFamily }}>
+                    {option.label}
+                  </Box>
+                )}
+                onChange={(e, v) => {
+                  if (!v) return handleChangeTextStyle({ fontFamily: '' })
+                  handleChangeTextStyle({ fontFamily: v.fontFamily })
+                }}
+              />
+            </FormGroup>
+          </FormControl>
 
           <FormControl>
             <FormLabel>Kích cỡ chữ ({textStyle.fontSize.toFixed(1)})</FormLabel>
             <FormGroup sx={{ pt: 1 }}>
-              <ButtonGroup aria-label="Small button group">
+              <ButtonGroup>
                 <Button
                   disabled={textStyle.fontSize <= 0.2}
                   onClick={() => handleChangeTextStyle({ fontSize: textStyle.fontSize - 0.1 })}
@@ -105,30 +134,68 @@ export const ChapterActionButton: FC<IChapterActionButton> = ({
           <FormControl>
             <FormLabel>Đậm nhạt</FormLabel>
             <FormGroup sx={{ pt: 1 }}>
-              <ButtonGroup aria-label="Small button group">
+              <ButtonGroup>
                 <Button
+                  sx={{ fontWeight: 300 }}
                   onClick={() => handleChangeTextStyle({ fontWeight: 300 })}
                   variant={textStyle.fontWeight === 300 ? 'contained' : 'outlined'}
                 >
                   Nhạt
                 </Button>
                 <Button
+                  sx={{ fontWeight: 400 }}
                   onClick={() => handleChangeTextStyle({ fontWeight: 400 })}
                   variant={textStyle.fontWeight === 400 ? 'contained' : 'outlined'}
                 >
                   Bình thường
                 </Button>
                 <Button
+                  sx={{ fontWeight: 600 }}
                   onClick={() => handleChangeTextStyle({ fontWeight: 600 })}
                   variant={textStyle.fontWeight === 600 ? 'contained' : 'outlined'}
                 >
                   Hơi đậm
                 </Button>
                 <Button
+                  sx={{ fontWeight: 700 }}
                   onClick={() => handleChangeTextStyle({ fontWeight: 700 })}
                   variant={textStyle.fontWeight === 700 ? 'contained' : 'outlined'}
                 >
                   Đậm
+                </Button>
+              </ButtonGroup>
+            </FormGroup>
+          </FormControl>
+
+          <FormControl>
+            <FormLabel>Giãn cách dòng</FormLabel>
+            <FormGroup sx={{ pt: 1 }}>
+              <ButtonGroup>
+                <Button
+                  disabled={textStyle.lineHeight <= 0.2}
+                  onClick={() => handleChangeTextStyle({ lineHeight: textStyle.lineHeight - 0.1 })}
+                >
+                  Giảm
+                </Button>
+                <Button onClick={() => handleChangeTextStyle({ lineHeight: 2.5 })}>Khôi phục</Button>
+                <Button onClick={() => handleChangeTextStyle({ lineHeight: textStyle.lineHeight + 0.1 })}>Tăng</Button>
+              </ButtonGroup>
+            </FormGroup>
+          </FormControl>
+
+          <FormControl>
+            <FormLabel>Giãn cách chữ</FormLabel>
+            <FormGroup sx={{ pt: 1 }}>
+              <ButtonGroup>
+                <Button
+                  disabled={textStyle.letterSpacing <= 0}
+                  onClick={() => handleChangeTextStyle({ letterSpacing: textStyle.letterSpacing - 0.01 })}
+                >
+                  Giảm
+                </Button>
+                <Button onClick={() => handleChangeTextStyle({ letterSpacing: 0 })}>Khôi phục</Button>
+                <Button onClick={() => handleChangeTextStyle({ letterSpacing: textStyle.letterSpacing + 0.01 })}>
+                  Tăng
                 </Button>
               </ButtonGroup>
             </FormGroup>
