@@ -59,7 +59,7 @@ const Register = () => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign up
+          Đăng kí
         </Typography>
         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
           <Grid container spacing={2}>
@@ -70,13 +70,13 @@ const Register = () => {
                 required
                 fullWidth
                 id="firstName"
-                label="First Name"
+                label="Tên"
                 autoFocus
                 onChange={e => {
                   setFirstName(e.target.value)
                 }}
                 error={submit && !firstName}
-                helperText={submit && !firstName ? 'This field is required' : ''}
+                helperText={submit && !firstName ? 'Vui lòng nhập Tên' : ''}
               />
             </Grid>
             <Grid size={6}>
@@ -84,14 +84,14 @@ const Register = () => {
                 required
                 fullWidth
                 id="lastName"
-                label="Last Name"
+                label="Họ"
                 name="lastName"
                 autoComplete="family-name"
                 onChange={e => {
                   setLastName(e.target.value)
                 }}
                 error={submit && !lastName}
-                helperText={submit && !lastName ? 'This field is required' : ''}
+                helperText={submit && !lastName ? 'Vui lòng nhập Họ' : ''}
               />
             </Grid>
             <Grid size={12}>
@@ -99,14 +99,14 @@ const Register = () => {
                 required
                 fullWidth
                 id="email"
-                label="Email Address"
+                label="Email"
                 name="email"
                 autoComplete="email"
                 onChange={e => {
                   setEmail(e.target.value)
                 }}
                 error={submit && !email}
-                helperText={submit && !email ? 'This field is required' : ''}
+                helperText={submit && !email ? 'Vui lòng nhập Email' : ''}
               />
             </Grid>
             <Grid size={12}>
@@ -114,7 +114,7 @@ const Register = () => {
                 required
                 fullWidth
                 name="password"
-                label="Password"
+                label="Mật khẩu"
                 type="password"
                 id="password"
                 autoComplete="new-password"
@@ -122,7 +122,7 @@ const Register = () => {
                   setPassword(e.target.value)
                 }}
                 error={submit && !password}
-                helperText={submit && !password ? 'This field is required' : ''}
+                helperText={submit && !password ? 'Vui lòng nhập Mật khẩu' : ''}
               />
             </Grid>
             <Grid size={12}>
@@ -136,18 +136,18 @@ const Register = () => {
                     color="primary"
                   />
                 }
-                label="I accept the terms and conditions"
+                label="Tôi đồng ý với các điều khoản"
               />
             </Grid>
           </Grid>
           <span className={`text-[#d32f2f] ${errorText && submit ? 'block' : 'hidden'}`}>{errorText}</span>
           <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-            Sign Up
+            Đăng kí
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid>
               <Link href="/login" variant="body2">
-                Already have an account? Sign in
+                Đã có tài khoản? Đăng nhập
               </Link>
             </Grid>
           </Grid>

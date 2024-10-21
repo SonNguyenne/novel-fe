@@ -49,7 +49,7 @@ const Login = () => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          Đăng nhập
         </Typography>
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
           <TextField
@@ -57,7 +57,7 @@ const Login = () => {
             required
             fullWidth
             id="email"
-            label="Email Address"
+            label="Email"
             name="email"
             autoComplete="email"
             autoFocus
@@ -65,14 +65,14 @@ const Login = () => {
               setEmail(e.target.value)
             }}
             error={submit && !email}
-            helperText={submit && !email ? 'This field is required' : ''}
+            helperText={submit && !email ? 'Vui lòng nhập Email' : ''}
           />
           <TextField
             margin="normal"
             required
             fullWidth
             name="password"
-            label="Password"
+            label="Mật khẩu"
             type="password"
             id="password"
             autoComplete="current-password"
@@ -80,22 +80,22 @@ const Login = () => {
               setPassword(e.target.value)
             }}
             error={submit && !password}
-            helperText={submit && !password ? 'This field is required' : ''}
+            helperText={submit && !password ? 'Vui lòng nhập Mật khẩu' : ''}
           />
-          <FormControlLabel control={<Checkbox value="remember" color="primary" />} label="Remember me" />
+          <FormControlLabel control={<Checkbox value="remember" color="primary" />} label="Nhớ mật khâủ" />
           <Typography color="error" className={`mt-2 ${errorText && submit ? 'block' : 'hidden'}`}>
             {errorText}
           </Typography>
           <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-            Sign In
+            Đăng nhập
           </Button>
 
           <Box sx={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
             <Link href="#" variant="body2">
-              Forgot password?
+              Quên mật khâủ
             </Link>
             <Link href="/register" variant="body2">
-              {"Don't have an account? Sign Up"}
+              Bạn chưa có tài khoản? Đăng ký
             </Link>
           </Box>
         </Box>

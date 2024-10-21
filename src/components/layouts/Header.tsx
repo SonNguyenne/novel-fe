@@ -130,26 +130,26 @@ export const Header: React.FC<HeaderProps> = ({ token, logout }) => {
             <ThemeModeButton />
             {!token ? (
               <>
-                <Link href="/login">
+                <Link href="/register">
                   <Button color="primary" variant="text" size="medium">
-                    Đăng nhập
+                    Đăng kí
                   </Button>
                 </Link>
-                <Link href="/register">
+                <Link href="/login">
                   <Button color="primary" variant="contained" size="medium">
-                    Đăng kí
+                    Đăng nhập
                   </Button>
                 </Link>
               </>
             ) : (
               <>
-                <Tooltip title="Favorite list" onClick={() => router.push('/list')}>
+                <Tooltip title="Yêu thích" onClick={() => router.push('/list')}>
                   <IconButton aria-label="delete" color="error">
                     <FavoriteIcon />
                   </IconButton>
                 </Tooltip>
 
-                <Tooltip title="Profile">
+                <Tooltip title="Trang cá nhân">
                   <IconButton aria-label="profile" color="info">
                     <PersonIcon />
                   </IconButton>
