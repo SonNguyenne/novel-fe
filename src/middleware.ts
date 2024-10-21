@@ -1,6 +1,5 @@
 import { auth } from '@/auth'
-import { NextRequest } from 'next/server'
-import { NextResponse } from 'next/server'
+import { NextResponse, NextRequest } from 'next/server'
 import { get } from 'lodash'
 import { UserRole } from './types'
 
@@ -26,5 +25,6 @@ export default auth((req: NextRequest) => {
 
 export const config = {
   matcher: ['/admin/:path*', '/dashboard/:path*'],
+  unstable_allowDynamic: ['**/node_modules/lodash/_root.js'],
   // matcher: ['/admin((?!api|error|_next/static|_next/image|favicon.ico).*)'],
 }

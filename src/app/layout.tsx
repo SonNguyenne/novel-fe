@@ -4,7 +4,6 @@ import { Footer, Header, ScrollToTopButton } from '@/components'
 import { ThemeClientProvider } from '@/providers'
 import { auth, signOut } from '@/auth'
 import _ from 'lodash'
-import { SessionProvider } from 'next-auth/react'
 
 export const metadata: Metadata = {
   title: 'Read or Dead',

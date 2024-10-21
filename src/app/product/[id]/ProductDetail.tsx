@@ -18,7 +18,7 @@ import TablePaginationActions from '@mui/material/TablePagination/TablePaginatio
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Rating from '@mui/material/Rating'
-import { IChapter, IProduct, IRate, PRODUCT_STATUS, ProductDetailProps } from '@/types'
+import { IChapter, IProduct, PRODUCT_STATUS, ProductDetailProps } from '@/types'
 import { formatCurrency, formatDatetime } from '@/lib/utils'
 import { ProductGrid } from '@/components/grids'
 import Image from 'next/image'

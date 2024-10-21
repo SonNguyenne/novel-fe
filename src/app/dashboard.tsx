@@ -17,7 +17,7 @@ import {
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import React from 'react'
-import { _handleReponse, formatTimeAgo } from '@/lib/utils'
+import { formatTimeAgo } from '@/lib/utils'
 import { ProductGrid } from '@/components/grids'
 import Grid from '@mui/material/Grid2'
 import Link from 'next/link'

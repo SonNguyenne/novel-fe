@@ -1,4 +1,4 @@
-import NextAuth, { User } from 'next-auth'
+import NextAuth from 'next-auth'
 import { AdapterUser } from 'next-auth/adapters'
 import Credentials from 'next-auth/providers/credentials'
 import { IUser } from './types'
