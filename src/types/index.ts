@@ -49,14 +49,14 @@ export interface IRate {
 
 export interface IUser {
   id: number
-  name?: string
+  name?: string | null
   email?: string
   phone?: string | null
   birthdate?: string | null
   picture?: string | null
   money?: number
   refreshToken?: string | null
-  emailVerified?: boolean
+  emailVerified?: Date | null
   createdAt?: string
   access_token?: string
 }

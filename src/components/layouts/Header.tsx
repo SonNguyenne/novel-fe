@@ -18,11 +18,7 @@ import IconButton from '@mui/material/IconButton'
 import { Tooltip } from '@mui/material'
 import { Container, ThemeModeButton } from '@/components'
 import PersonIcon from '@mui/icons-material/Person'
-
-interface HeaderProps {
-  token?: string
-  logout?: () => void
-}
+import { signOut, useSession } from 'next-auth/react'
 
 const pages = [
   { name: 'Danh sách', href: '/' },
@@ -30,7 +26,8 @@ const pages = [
   { name: 'Phân loại', href: '/' },
 ]
 
-export const Header: React.FC<HeaderProps> = ({ token, logout }) => {
+export const Header = () => {
+  const { data } = useSession()
   const router = useRouter()
   const [open, setOpen] = React.useState(false)
   const toggleDrawer = (newOpen: boolean) => () => {
@@ -128,7 +125,7 @@ export const Header: React.FC<HeaderProps> = ({ token, logout }) => {
             }}
           >
             <ThemeModeButton />
-            {!token ? (
+            {!data ? (
               <>
                 <Link href="/register">
                   <Button color="primary" variant="text" size="medium">
@@ -154,7 +151,7 @@ export const Header: React.FC<HeaderProps> = ({ token, logout }) => {
                     <PersonIcon />
                   </IconButton>
                 </Tooltip>
-                <Button color="primary" variant="text" size="medium" onClick={() => logout && logout()}>
+                <Button color="primary" variant="text" size="medium" onClick={() => signOut()}>
                   Thoát
                 </Button>
               </>
@@ -187,7 +184,7 @@ export const Header: React.FC<HeaderProps> = ({ token, logout }) => {
                   </MenuItem>
                 ))}
                 <Divider />
-                {!token ? (
+                {!data ? (
                   <>
                     <MenuItem>
                       <Button color="primary" variant="contained" component="a" href="/login" sx={{ width: '100%' }}>

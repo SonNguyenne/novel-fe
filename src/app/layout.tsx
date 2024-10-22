@@ -2,11 +2,11 @@ import type { Metadata } from 'next'
 import './globals.css'
 import { Footer, Header, ScrollToTopButton } from '@/components'
 import { ThemeClientProvider } from '@/providers'
-import { auth, signOut } from '@/auth'
-import _ from 'lodash'
+import { auth } from '@/auth'
+import { SessionProvider } from 'next-auth/react'
 
 export const metadata: Metadata = {
-  title: 'Read or Dead',
+  title: 'AiTruyen',
   description: 'Welcome',
 }
 
@@ -16,27 +16,24 @@ export default async function RootLayout({
   children: React.ReactNode
 }>) {
   const session = await auth()
-  const token = _.get(session, 'user.access_token', '')
+
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body>
-        <ThemeClientProvider>
-          <Header
-            token={token}
-            logout={async () => {
-              'use server'
-              await signOut()
-            }}
-          />
+    <SessionProvider session={session}>
+      <ThemeClientProvider>
+        <html lang="en" suppressHydrationWarning>
+          <body>
+            <Header />
 
-          <main className="relative mt-28 min-h-[calc(100dvh-112px-90px)] flex flex-col">
-            {children}
+            <main className="relative mt-28 min-h-[calc(100dvh-112px-90px)] flex flex-col">
+              {children}
 
-            <ScrollToTopButton />
-          </main>
-          <Footer />
-        </ThemeClientProvider>
-      </body>
-    </html>
+              <ScrollToTopButton />
+            </main>
+
+            <Footer />
+          </body>
+        </html>
+      </ThemeClientProvider>
+    </SessionProvider>
   )
 }
