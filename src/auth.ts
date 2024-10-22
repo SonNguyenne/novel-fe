@@ -3,14 +3,18 @@ import Credentials from 'next-auth/providers/credentials'
 import 'next-auth/jwt'
 
 declare module 'next-auth' {
+  interface User {
+    accessToken?: string
+  }
+
   interface Session {
-    access_token?: string
+    accessToken?: string
   }
 }
 
 declare module 'next-auth/jwt' {
   interface JWT {
-    access_token?: string
+    accessToken?: string
   }
 }
 
@@ -29,7 +33,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         })
         const json = await res.json()
 
-        if (res.ok && json && json.user) return { access_token: json.access_token, ...json.user }
+        if (res.ok && json && json.user)
+          return { ...json.user, accessToken: json.accessToken, refreshToken: json.user.refreshToken }
 
         return null
       },
@@ -41,15 +46,15 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     error: '/error',
   },
   callbacks: {
-    jwt({ token, trigger, session, account }) {
-      // if (user) token.access_token = user.access_token // TODO: check
+    jwt({ token, trigger, session, account, user }) {
+      if (user) token.accessToken = user.accessToken
       if (trigger === 'update') token.name = session.user.name
-      if (account?.provider === 'keycloak') return { ...token, access_token: account.access_token }
+      if (account?.provider === 'keycloak') return { ...token, accessToken: account.access_token }
 
       return token
     },
     session({ session, token }) {
-      if (token?.access_token) session.access_token = token.access_token
+      if (token?.accessToken) session.accessToken = token.accessToken
       if (token?.sub) session.user.id = token.sub
 
       return session

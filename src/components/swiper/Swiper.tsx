@@ -34,8 +34,6 @@ export const Swiper: FC<ISwiperProps> = ({ items, loading, slidesPerView = 5 }) 
         },
       }}
       spaceBetween={10}
-      // slidesPerView={slidesPerView}
-      loop
       autoplay={{
         delay: 2500,
         disableOnInteraction: false,

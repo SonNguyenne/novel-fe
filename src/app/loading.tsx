@@ -1,11 +1,12 @@
+import { Box } from '@mui/material'
 import CircularProgress from '@mui/material/CircularProgress'
 import React from 'react'
 
 const Loading = () => {
   return (
-    <div className="flex justify-center items-center">
+    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
       <CircularProgress />
-    </div>
+    </Box>
   )
 }
 

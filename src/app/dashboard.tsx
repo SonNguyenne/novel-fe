@@ -54,8 +54,8 @@ export default function Dashboard({ products, categories, doneProducts }: Dashbo
                 height: {
                   xs: 180,
                   md: 620,
-                  lg: 300,
-                  xl: 390,
+                  lg: 340,
+                  xl: 430,
                 },
                 p: 2,
               }}

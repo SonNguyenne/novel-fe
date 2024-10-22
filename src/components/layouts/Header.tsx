@@ -16,9 +16,10 @@ import FavoriteIcon from '@mui/icons-material/Favorite'
 import Link from 'next/link'
 import IconButton from '@mui/material/IconButton'
 import { Tooltip } from '@mui/material'
-import { Container, ThemeModeButton } from '@/components'
+import { Container, ProfileButton, ThemeModeButton } from '@/components'
 import PersonIcon from '@mui/icons-material/Person'
 import { signOut, useSession } from 'next-auth/react'
+import { Settings } from '@mui/icons-material'
 
 const pages = [
   { name: 'Danh sách', href: '/' },
@@ -117,6 +118,7 @@ export const Header = () => {
             </Box>
           </Box>
 
+          {/* Tablet - PC */}
           <Box
             sx={{
               display: { xs: 'none', md: 'flex' },
@@ -140,24 +142,18 @@ export const Header = () => {
               </>
             ) : (
               <>
-                <Tooltip title="Yêu thích" onClick={() => router.push('/list')}>
-                  <IconButton aria-label="delete" color="error">
+                <Tooltip title="Yêu thích">
+                  <IconButton aria-label="delete" color="error" disabled>
                     <FavoriteIcon />
                   </IconButton>
                 </Tooltip>
 
-                <Tooltip title="Trang cá nhân">
-                  <IconButton aria-label="profile" color="info">
-                    <PersonIcon />
-                  </IconButton>
-                </Tooltip>
-                <Button color="primary" variant="text" size="medium" onClick={() => signOut()}>
-                  Thoát
-                </Button>
+                <ProfileButton />
               </>
             )}
           </Box>
 
+          {/* Mobile */}
           <Box sx={{ display: { sm: '', md: 'none' } }}>
             <ThemeModeButton />
             <Button
@@ -187,29 +183,48 @@ export const Header = () => {
                 {!data ? (
                   <>
                     <MenuItem>
-                      <Button color="primary" variant="contained" component="a" href="/login" sx={{ width: '100%' }}>
-                        Đăng nhập
-                      </Button>
-                    </MenuItem>
-                    <MenuItem>
                       <Button color="primary" variant="outlined" component="a" href="/register" sx={{ width: '100%' }}>
                         Đăng kí
                       </Button>
                     </MenuItem>
+                    <MenuItem>
+                      <Button color="primary" variant="contained" component="a" href="/login" sx={{ width: '100%' }}>
+                        Đăng nhập
+                      </Button>
+                    </MenuItem>
                   </>
                 ) : (
-                  <MenuItem>
-                    <Button
-                      color="primary"
-                      variant="contained"
-                      component="a"
-                      href="/profile"
-                      sx={{ width: '100%' }}
-                      startIcon={<PersonIcon />}
-                    >
-                      Trang cá nhân
-                    </Button>
-                  </MenuItem>
+                  <>
+                    <MenuItem disabled>
+                      <Button
+                        color="primary"
+                        variant="outlined"
+                        component="a"
+                        href="/profile"
+                        sx={{ width: '100%' }}
+                        startIcon={<PersonIcon />}
+                      >
+                        Trang cá nhân
+                      </Button>
+                    </MenuItem>
+                    <MenuItem disabled>
+                      <Button
+                        color="primary"
+                        variant="outlined"
+                        component="a"
+                        sx={{ width: '100%' }}
+                        startIcon={<Settings />}
+                      >
+                        Cài đặt
+                      </Button>
+                    </MenuItem>
+                    <Divider />
+                    <MenuItem>
+                      <Button color="error" variant="contained" sx={{ width: '100%' }} onClick={() => signOut()}>
+                        Đăng xuất
+                      </Button>
+                    </MenuItem>
+                  </>
                 )}
               </Box>
             </Drawer>

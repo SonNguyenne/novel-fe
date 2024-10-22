@@ -1,3 +1,7 @@
+.swiper-wrapper {
+  padding-bottom: 40px;
+}
+
 .swiper-pagination-bullets {
   display: flex;
   justify-content: center;

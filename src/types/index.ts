@@ -58,11 +58,11 @@ export interface IUser {
   refreshToken?: string | null
   emailVerified?: Date | null
   createdAt?: string
-  access_token?: string
+  accessToken?: string
 }
 
 export interface LoginResponse {
-  access_token: string
+  accessToken: string
   data: IUser
 }
 

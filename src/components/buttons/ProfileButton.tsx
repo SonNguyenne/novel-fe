@@ -5,12 +5,14 @@ import MenuItem from '@mui/material/MenuItem'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import Divider from '@mui/material/Divider'
 import IconButton from '@mui/material/IconButton'
-import PersonAdd from '@mui/icons-material/PersonAdd'
 import Settings from '@mui/icons-material/Settings'
 import Logout from '@mui/icons-material/Logout'
-import { signOut } from 'next-auth/react'
+import { signOut, useSession } from 'next-auth/react'
+import { stringAvatar } from '@/lib'
+import CircularProgress from '@mui/material/CircularProgress'
 
 export const ProfileButton = () => {
+  const { data: session } = useSession()
   const [anchorEl, setAnchorEl] = React.useState(null)
   const open = Boolean(anchorEl)
 
@@ -21,6 +23,9 @@ export const ProfileButton = () => {
     setAnchorEl(null)
   }
 
+  if (!session || !session.user) return null
+  const { user } = session
+
   return (
     <React.Fragment>
       <IconButton
@@ -30,12 +35,11 @@ export const ProfileButton = () => {
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
       >
-        <Avatar
-          sx={{ width: 28, height: 28 }}
-          src={'https://www.w3schools.com/w3images/avatar2.png'}
-          srcSet={'https://www.w3schools.com/w3images/avatar2.png'}
-          // {...stringAvatar('Kent Dodds')}
-        />
+        {user.image ? (
+          <Avatar sx={{ width: 28, height: 28 }} src={user.image} srcSet={user.image} />
+        ) : user.name ? (
+          <Avatar {...stringAvatar(user.name)} />
+        ) : null}
       </IconButton>
       <Menu
         anchorEl={anchorEl}
@@ -75,12 +79,12 @@ export const ProfileButton = () => {
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
         <MenuItem onClick={handleClose} disabled>
-          <Avatar /> Trang cá nhân
+          <Avatar /> {user.name}
         </MenuItem>
         <Divider />
         <MenuItem onClick={handleClose} disabled>
           <ListItemIcon>
-            <PersonAdd fontSize="small" />
+            <CircularProgress size={20} />
           </ListItemIcon>
           Developing...
         </MenuItem>
