@@ -1,6 +1,6 @@
 services:
   web:
-    image: son29032001/novel-fe:${ENV:-dev}
+    image: developersota/frontend:${ENV:-dev}
     container_name: web
     restart: unless-stopped
     build:

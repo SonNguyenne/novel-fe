@@ -160,7 +160,7 @@ export interface IFilter {
   orderBy?: Record<string, unknown>
   include?: Record<string, unknown>
   select?: Record<string, unknown>
-  [x: string]: any
+  [x: string]: unknown
 }
 
 export interface IList {

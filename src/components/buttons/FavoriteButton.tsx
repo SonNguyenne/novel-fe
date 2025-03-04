@@ -42,10 +42,10 @@ export const FavoriteButton = () => {
             <Spinner />
           </div>
         )}
-        {listResp?.data?.map(list => {
+        {listResp?.data?.map((list, i) => {
           if (list.classification === 'READING' && list.chapters?.length !== 0)
             return (
-              <CardPaper title="Đang đọc">
+              <CardPaper key={i} title="Đang đọc">
                 {list.chapters?.map(chapter => {
                   return (
                     <a
@@ -86,10 +86,10 @@ export const FavoriteButton = () => {
             )
         })}
 
-        {listResp?.data?.map(list => {
+        {listResp?.data?.map((list, i) => {
           if (list.classification === 'FAVORITE' && list.products?.length !== 0)
             return (
-              <CardPaper title="Yêu thích">
+              <CardPaper key={i} title="Yêu thích">
                 {list.products?.map(product => {
                   return (
                     <a
